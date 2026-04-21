@@ -1,1 +1,1 @@
-export {MigrationEntityResultsTable} from './MigrationEntityResultsTable';
+export { MigrationEntityResultsTable } from './MigrationEntityResultsTable';

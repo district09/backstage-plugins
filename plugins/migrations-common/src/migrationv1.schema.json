@@ -8,27 +8,17 @@
     },
     {
       "type": "object",
-      "required": [
-        "spec"
-      ],
+      "required": ["spec"],
       "properties": {
         "apiVersion": {
-          "enum": [
-            "backstage.district09.gent/v1"
-          ]
+          "enum": ["backstage.district09.gent/v1"]
         },
         "kind": {
-          "enum": [
-            "Migration"
-          ]
+          "enum": ["Migration"]
         },
         "spec": {
           "type": "object",
-          "required": [
-            "type",
-            "owner",
-            "checks"
-          ],
+          "required": ["type", "owner", "checks"],
           "properties": {
             "type": {
               "type": "string"
@@ -48,9 +38,7 @@
               "type": "array",
               "items": {
                 "type": "object",
-                "required": [
-                  "checkId"
-                ],
+                "required": ["checkId"],
                 "properties": {
                   "checkId": {
                     "type": "string"

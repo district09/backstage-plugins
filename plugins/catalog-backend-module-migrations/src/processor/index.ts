@@ -1,3 +1,1 @@
-export {
-    MigrationKindProcessor
-} from './MigrationKindProcessor.ts';
+export { MigrationKindProcessor } from './MigrationKindProcessor.ts';

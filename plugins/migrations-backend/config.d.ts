@@ -1,4 +1,4 @@
-import {SchedulerServiceTaskScheduleDefinition} from '@backstage/backend-plugin-api';
+import { SchedulerServiceTaskScheduleDefinition } from '@backstage/backend-plugin-api';
 
 export interface Config {
   migrations: {

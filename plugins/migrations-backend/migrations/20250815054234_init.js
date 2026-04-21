@@ -5,7 +5,7 @@
 exports.up = async function (knex) {
   await knex.schema.createTable('migration_check_results', table => {
     table.comment('Table to store individual check results for migrations');
-    table.increments('id', {primaryKey: true});
+    table.increments('id', { primaryKey: true });
     table.string('checkId', 255).notNullable();
     table.string('description', 1024);
     table.boolean('result').notNullable().defaultTo(false);
