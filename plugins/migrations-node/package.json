@@ -14,7 +14,13 @@
   },
   "backstage": {
     "role": "node-library",
-    "pluginId": "migrations"
+    "pluginId": "migrations",
+    "pluginPackages": [
+      "@district09/backstage-plugin-migrations",
+      "@district09/backstage-plugin-migrations-backend",
+      "@district09/backstage-plugin-migrations-common",
+      "@district09/backstage-plugin-migrations-node"
+    ]
   },
   "scripts": {
     "build": "backstage-cli package build",

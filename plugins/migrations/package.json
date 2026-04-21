@@ -13,7 +13,13 @@
   },
   "backstage": {
     "role": "frontend-plugin",
-    "pluginId": "migrations"
+    "pluginId": "migrations",
+    "pluginPackages": [
+      "@district09/backstage-plugin-migrations",
+      "@district09/backstage-plugin-migrations-backend",
+      "@district09/backstage-plugin-migrations-common",
+      "@district09/backstage-plugin-migrations-node"
+    ]
   },
   "sideEffects": false,
   "scripts": {
