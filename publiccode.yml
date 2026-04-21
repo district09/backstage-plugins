@@ -1,0 +1,31 @@
+publiccodeYmlVersion: 0.5.0
+name: LOD Widget
+url: https://github.com/district09/backstage-plugins
+softwareVersion: 0.0.1
+releaseDate: 2026-04-21
+platforms:
+  - web
+categories:
+  - knowledge-management
+  - data-visualization
+developmentStatus: development
+softwareType: library
+description:
+  en:
+    localisedName: Backstage plugin Migrations
+    shortDescription: A plugin for backstage to visualize and track software migrations in your catalog
+    longDescription: |
+      This plugin enables you to write some custom checks, which the backend plugin will run.
+      These checks are meant to be some kind of maturity check for your backstage catalog. e.g. "Do all my components have a title set?" or "Are all my python components on version 3.14?"
+      The plugin will be visualized in the frontend to keep track of results.
+legal:
+  license: MIT
+maintenance:
+  type: community
+  contacts:
+    - name: District09
+      email: ttweb@district09.gent
+localisation:
+  localisationReady: false
+  availableLanguages:
+    - en
