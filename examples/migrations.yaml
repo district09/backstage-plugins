@@ -1,0 +1,20 @@
+apiVersion: backstage.district09.gent/v1
+kind: Migration
+metadata:
+  name: catalog-info-migration
+  title: Catalog Info Migration
+  tags:
+    - catalog
+    - best-practices
+    - metadata
+  description: |
+    This migration makes sure all components follow the best practices for catalog info.
+spec:
+  type: catalog
+  owner: guests
+  dueDate: 2027-02-01
+  mandatory: false
+  entityFilter:
+    kind: Component
+  checks:
+    - checkId: 'entity-metadata-checker'

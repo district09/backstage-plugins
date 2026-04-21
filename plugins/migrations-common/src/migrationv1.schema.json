@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "MigrationEntityV1",
+  "title": "MigrationEntityV1",
+  "allOf": [
+    {
+      "$ref": "Entity"
+    },
+    {
+      "type": "object",
+      "required": [
+        "spec"
+      ],
+      "properties": {
+        "apiVersion": {
+          "enum": [
+            "backstage.district09.gent/v1"
+          ]
+        },
+        "kind": {
+          "enum": [
+            "Migration"
+          ]
+        },
+        "spec": {
+          "type": "object",
+          "required": [
+            "type",
+            "owner",
+            "checks"
+          ],
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "owner": {
+              "type": "string"
+            },
+            "dueDate": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "mandatory": {
+              "type": "boolean",
+              "default": false
+            },
+            "checks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "checkId"
+                ],
+                "properties": {
+                  "checkId": {
+                    "type": "string"
+                  }
+                }
+              },
+              "default": []
+            }
+          }
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "apiVersion": "backstage.district09.gent/v1",
+      "kind": "Migration",
+      "metadata": {
+        "name": "require-group-ownership",
+        "title": "Require Group Ownership",
+        "description": "Ensure all entities have a group set as owner in the catalog-info.yaml."
+      },
+      "spec": {
+        "type": "service",
+        "owner": "team-platform",
+        "dueDate": "2025-12-31",
+        "mandatory": true,
+        "checks": [
+          {
+            "checkId": "cicd-checker"
+          }
+        ]
+      }
+    }
+  ]
+}

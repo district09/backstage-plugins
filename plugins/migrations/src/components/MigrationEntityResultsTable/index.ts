@@ -1,0 +1,1 @@
+export {MigrationEntityResultsTable} from './MigrationEntityResultsTable';
