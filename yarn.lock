@@ -4867,6 +4867,7 @@ __metadata:
     react-use: "npm:^17.6.0"
   peerDependencies:
     react: ^18.0.2
+    react-dom: "*"
   languageName: unknown
   linkType: soft
 

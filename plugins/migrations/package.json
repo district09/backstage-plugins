@@ -45,7 +45,8 @@
     "react-use": "^17.6.0"
   },
   "peerDependencies": {
-    "react": "^18.0.2"
+    "react": "^18.0.2",
+    "react-dom": "*"
   },
   "devDependencies": {
     "@backstage/cli": "backstage:^",
