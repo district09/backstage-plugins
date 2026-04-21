@@ -22,7 +22,8 @@
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "new": "backstage-cli new",
-    "bump": "yarn run standard-version --no-verify --releaseCommitMessageFormat 'v{{currentTag}}'"
+    "bump": "yarn run standard-version --no-verify --releaseCommitMessageFormat 'v{{currentTag}}'",
+    "postinstall": "husky"
   },
   "workspaces": [
     "packages/*",
@@ -35,9 +36,11 @@
     "@jest/environment-jsdom-abstract": "^30.0.0",
     "@playwright/test": "^1.32.3",
     "@types/jest": "^30.0.0",
+    "husky": "^9.1.7",
     "jest": "^30.2.0",
     "jsdom": "^27.1.0",
     "node-gyp": "^10.0.0",
+    "pinst": "^3.0.0",
     "prettier": "^2.3.2",
     "standard-version": "^9.5.0",
     "typescript": "~5.8.0"

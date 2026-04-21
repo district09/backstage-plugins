@@ -20862,6 +20862,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"husky@npm:^9.1.7":
+  version: 9.1.7
+  resolution: "husky@npm:9.1.7"
+  bin:
+    husky: bin.js
+  checksum: 10c0/35bb110a71086c48906aa7cd3ed4913fb913823715359d65e32e0b964cb1e255593b0ae8014a5005c66a68e6fa66c38dcfa8056dbbdfb8b0187c0ffe7ee3a58f
+  languageName: node
+  linkType: hard
+
 "hyperdyperid@npm:^1.2.0":
   version: 1.2.0
   resolution: "hyperdyperid@npm:1.2.0"
@@ -26776,6 +26785,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pinst@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "pinst@npm:3.0.0"
+  bin:
+    pinst: bin.js
+  checksum: 10c0/abb1ed62ea2acb2207a7a860715bdb26ecbde74ede8fad5f6200194f3e22db25e2b7a49af05e5cc7fc05384709c651e0000323f0077d7239060c4b68c8acd428
+  languageName: node
+  linkType: hard
+
 "pirates@npm:^4.0.1, pirates@npm:^4.0.6, pirates@npm:^4.0.7":
   version: 4.0.7
   resolution: "pirates@npm:4.0.7"
@@ -29408,9 +29426,11 @@ __metadata:
     "@jest/environment-jsdom-abstract": "npm:^30.0.0"
     "@playwright/test": "npm:^1.32.3"
     "@types/jest": "npm:^30.0.0"
+    husky: "npm:^9.1.7"
     jest: "npm:^30.2.0"
     jsdom: "npm:^27.1.0"
     node-gyp: "npm:^10.0.0"
+    pinst: "npm:^3.0.0"
     prettier: "npm:^2.3.2"
     standard-version: "npm:^9.5.0"
     typescript: "npm:~5.8.0"
