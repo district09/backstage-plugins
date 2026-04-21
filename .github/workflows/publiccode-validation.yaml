@@ -7,6 +7,7 @@ on:
   push:
     paths:
       - publiccode.yml
+  workflow_dispatch:
 
 jobs:
   publiccode_yml_validation:
