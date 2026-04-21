@@ -4,12 +4,11 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.1.1](https://github.com/district09/backstage-plugins/compare/v1.1.0...v1.1.1) (2026-04-21)
 
-
 ### Bug Fixes
 
-* add backstage cli plugin packages ([8fea58d](https://github.com/district09/backstage-plugins/commit/8fea58d1d9c1dabe43d9891a2dccc987312d074d))
-* merge Merge branch 'main' of github.com:district09/backstage-plugins ([a854ddc](https://github.com/district09/backstage-plugins/commit/a854ddc4b7f6e39469587976fc797429b7726d36))
-* prettier ([b7ce960](https://github.com/district09/backstage-plugins/commit/b7ce960f4967e030e90cb230a6286b318e59703d))
+- add backstage cli plugin packages ([8fea58d](https://github.com/district09/backstage-plugins/commit/8fea58d1d9c1dabe43d9891a2dccc987312d074d))
+- merge Merge branch 'main' of github.com:district09/backstage-plugins ([a854ddc](https://github.com/district09/backstage-plugins/commit/a854ddc4b7f6e39469587976fc797429b7726d36))
+- prettier ([b7ce960](https://github.com/district09/backstage-plugins/commit/b7ce960f4967e030e90cb230a6286b318e59703d))
 
 ## 1.1.0 (2026-04-21)
 
