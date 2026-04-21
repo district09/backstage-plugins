@@ -18,6 +18,10 @@ description:
       This plugin enables you to write some custom checks, which the backend plugin will run.
       These checks are meant to be some kind of maturity check for your backstage catalog. e.g. "Do all my components have a title set?" or "Are all my python components on version 3.14?"
       The plugin will be visualized in the frontend to keep track of results.
+    features:
+      - Tracking metrics for backstage software catalog
+      - Visualizing results of the trackers
+      - Boost maturity of the software catalog
 legal:
   license: MIT
 maintenance:
