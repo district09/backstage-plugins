@@ -1,0 +1,31 @@
+{
+  "packageFiles": [
+    "plugins/catalog-backend-module-migrations/package.json",
+    "plugins/migrations/package.json",
+    "plugins/migrations-backend/package.json",
+    "plugins/migrations-node/package.json",
+    "plugins/migrations-common/package.json"
+  ],
+  "bumpFiles": [
+    {
+      "filename": "plugins/catalog-backend-module-migrations/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "plugins/migrations/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "plugins/migrations-backend/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "plugins/migrations-node/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "plugins/migrations-common/package.json",
+      "type": "json"
+    }
+  ]
+}
