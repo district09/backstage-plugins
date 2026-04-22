@@ -1,6 +1,6 @@
 {
   "name": "@district09/backstage-plugin-catalog-backend-module-migrations",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "description": "The migrations backend module for the catalog plugin.",
   "repository": "https://github.com/district09/backstage-plugins",

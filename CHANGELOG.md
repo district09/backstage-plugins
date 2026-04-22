@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/district09/backstage-plugins/compare/v1.1.3...v0.1.1) (2026-04-22)
+
+
+### Bug Fixes
+
+* bump packages versions with standard-version ([5ca3935](https://github.com/district09/backstage-plugins/commit/5ca3935b06ab9e0413228241e0bcdbf2f2ef163b))
+
 ### [1.1.3](https://github.com/district09/backstage-plugins/compare/v1.1.2...v1.1.3) (2026-04-21)
 
 ### [1.1.2](https://github.com/district09/backstage-plugins/compare/v1.1.1...v1.1.2) (2026-04-21)
