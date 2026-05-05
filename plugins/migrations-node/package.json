@@ -1,6 +1,6 @@
 {
   "name": "@district09/backstage-plugin-migrations-node",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "description": "Node.js library for the migrations plugin",
   "repository": "https://github.com/district09/backstage-plugins",
