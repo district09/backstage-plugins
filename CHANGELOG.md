@@ -4,16 +4,14 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [0.1.2](https://github.com/district09/backstage-plugins/compare/v0.1.1...v0.1.2) (2026-05-05)
 
-
 ### Features
 
-* add documentation ([618119d](https://github.com/district09/backstage-plugins/commit/618119d12ae3a44c13cbdc6a8b2ba6192b60ccf2))
-
+- add documentation ([618119d](https://github.com/district09/backstage-plugins/commit/618119d12ae3a44c13cbdc6a8b2ba6192b60ccf2))
 
 ### Bug Fixes
 
-* add husky pre-commit hook ([9285648](https://github.com/district09/backstage-plugins/commit/92856488e7b1b3a46a72077fc0deb76e0a736430))
-* formatting ([12200e1](https://github.com/district09/backstage-plugins/commit/12200e1e2ebe6a44fa992e2b2e25a6b7c33938ea))
+- add husky pre-commit hook ([9285648](https://github.com/district09/backstage-plugins/commit/92856488e7b1b3a46a72077fc0deb76e0a736430))
+- formatting ([12200e1](https://github.com/district09/backstage-plugins/commit/12200e1e2ebe6a44fa992e2b2e25a6b7c33938ea))
 
 ### [0.1.1](https://github.com/district09/backstage-plugins/compare/v1.1.3...v0.1.1) (2026-04-22)
 
