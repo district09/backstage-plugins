@@ -17,6 +17,7 @@ export type CheckResultsDbEntity = {
   checkId: string;
   description?: string;
   result: boolean;
+  message?: string; // optional human-readable explanation of the check result
   checked_at?: string; // ISO timestamp
   migrationReference: string;
   componentReference: string;
@@ -24,6 +25,8 @@ export type CheckResultsDbEntity = {
 
 export interface MigrationCheckResult {
   result: boolean;
+  /** Optional human-readable explanation of why the check passed or failed. */
+  message?: string;
 }
 
 export interface MigrationChecker {
@@ -76,6 +79,7 @@ export abstract class BaseMigrationChecker implements MigrationChecker {
         migrationReference: stringifyEntityRef(migration),
         componentReference: stringifyEntityRef(e),
         result: result.result,
+        message: result.message,
       });
     }
     return allResults;

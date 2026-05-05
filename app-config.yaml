@@ -11,6 +11,7 @@ app:
     - nav-item:user-settings: false
     - nav-item:catalog: false
     - nav-item:scaffolder: false
+    - entity-card:catalog-graph/relations: false
 
     # Configure the catalog index page to be the root page, this is normally mounted on /catalog
     - page:catalog:

@@ -84,6 +84,8 @@ export const isMigrationEntityV1 = (
 export interface ComponentMigrationResult {
   checkId: string;
   result: boolean;
+  /** Optional human-readable explanation of why the check passed or failed. */
+  message?: string;
   checked_at?: string;
 }
 

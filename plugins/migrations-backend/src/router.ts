@@ -173,6 +173,7 @@ export async function createRouter({
       checkId: r.checkId,
       migrationReference: r.migrationReference,
       result: r.result,
+      message: r.message,
       checked_at: r.checked_at,
     }));
 

@@ -6,10 +6,13 @@ import {
   TableColumn,
 } from '@backstage/core-components';
 import { useApi } from '@backstage/frontend-plugin-api';
-import { humanizeEntityRef, useEntity } from '@backstage/plugin-catalog-react';
+import {
+  useEntity,
+  useEntityPresentation,
+} from '@backstage/plugin-catalog-react';
 import { migrationsApiRef } from '../../api';
 import { useAsync } from 'react-use';
-import { getCompoundEntityRef, parseEntityRef } from '@backstage/catalog-model';
+import { getCompoundEntityRef } from '@backstage/catalog-model';
 import startCase from 'lodash/startCase';
 import { ComponentMigrationResult } from '@district09/backstage-plugin-migrations-common';
 
@@ -20,6 +23,7 @@ type CombinedResults = ComponentMigrationResult & {
 export const EntityMigrationContent = () => {
   const migrationsApi = useApi(migrationsApiRef);
   const { entity } = useEntity();
+  const entityRepresentation = useEntityPresentation(entity);
 
   const { loading, error, value } = useAsync(async () => {
     const results = await migrationsApi.getComponentResults(
@@ -63,17 +67,14 @@ export const EntityMigrationContent = () => {
       type: 'boolean',
     },
     { title: 'Description', field: 'description' },
+    { title: 'Message', field: 'message' },
     {
       title: 'Checked in migrations',
       field: 'in_migrations',
       render: row => (
         <>
           {[...row.in_migrations].map(m => (
-            <Chip
-              key={m}
-              title={m}
-              label={humanizeEntityRef(parseEntityRef(m))}
-            />
+            <Chip key={m} title={m} label={entityRepresentation.primaryTitle} />
           ))}
         </>
       ),

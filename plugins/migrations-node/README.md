@@ -34,7 +34,15 @@ export class Python3Checker extends BaseMigrationChecker {
   ): Promise<MigrationCheckResult> {
     const isPython3 =
       entity.metadata.annotations?.['example.com/python-version'] === '3';
-    return { result: isPython3 };
+    return {
+      result: isPython3,
+      message: isPython3
+        ? undefined
+        : `Component is on Python ${
+            entity.metadata.annotations?.['example.com/python-version'] ??
+            'unknown'
+          } — upgrade to Python 3 is required.`,
+    };
   }
 }
 ```
@@ -112,11 +120,11 @@ backend.add(import('./modules/migrationsModulePython3Checker'));
 
 Abstract base class. Subclasses must implement:
 
-| Member                        | Type                            | Description                                                 |
-| ----------------------------- | ------------------------------- | ----------------------------------------------------------- |
-| `id`                          | `string`                        | Unique identifier matching the `checkId` in Migration specs |
-| `description`                 | `string`                        | Human-readable description of the check                     |
-| `runCheck(entity, migration)` | `Promise<MigrationCheckResult>` | Runs the check for a single entity                          |
+| Member                        | Type                            | Description                                                                                   |
+| ----------------------------- | ------------------------------- | --------------------------------------------------------------------------------------------- |
+| `id`                          | `string`                        | Unique identifier matching the `checkId` in Migration specs                                   |
+| `description`                 | `string`                        | Human-readable description of the check                                                       |
+| `runCheck(entity, migration)` | `Promise<MigrationCheckResult>` | Runs the check for a single entity. Return `message` to explain why a check passed or failed. |
 
 ### `migrationCheckRunnerExtensionPoint`
 

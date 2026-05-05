@@ -1,149 +1,184 @@
-import {
-  Box,
-  CellText,
-  ColumnConfig,
-  Table,
-  ToggleButton,
-  ToggleButtonGroup,
-  useTable,
-} from '@backstage/ui';
-import { type Key, useEffect, useRef, useState } from 'react';
-import { RouteFunc, useApi, useRouteRef } from '@backstage/frontend-plugin-api';
+import { useState } from 'react';
+import { useApi } from '@backstage/frontend-plugin-api';
 import { migrationsApiRef } from '../../api';
-import {
-  entityRouteParams,
-  entityRouteRef,
-  humanizeEntityRef,
-  useEntity,
-} from '@backstage/plugin-catalog-react';
+import { EntityRefLink, useEntity } from '@backstage/plugin-catalog-react';
 import {
   ComponentMigrationResult,
   MigrationEntityV1,
 } from '@district09/backstage-plugin-migrations-common';
-import { StatusError, StatusOK } from '@backstage/core-components';
+import {
+  StatusError,
+  StatusOK,
+  Table,
+  TableColumn,
+} from '@backstage/core-components';
 import { parseEntityRef } from '@backstage/catalog-model';
+import {
+  Box,
+  Divider,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Tooltip,
+  Typography,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import { useAsync } from 'react-use';
 
-const createColumns = (
-  checks: {
-    id: string;
-    description?: string | undefined;
-  }[],
-  entityRoute:
-    | RouteFunc<{ name: string; kind: string; namespace: string }>
-    | undefined,
-): ColumnConfig<{
+type RowData = {
   id: string;
   results: Array<ComponentMigrationResult>;
-}>[] => {
+};
+
+const createColumns = (
+  checks: { id: string; description?: string | undefined }[],
+): TableColumn<RowData>[] => {
   return [
     {
-      id: 'name',
-      label: 'Name',
-      isRowHeader: true,
-      isSortable: false,
-      cell: item => {
+      title: 'Name',
+      field: 'id',
+      render: item => {
         const entityRef = parseEntityRef(item.id);
-        const title = humanizeEntityRef(entityRef, {
-          defaultNamespace: 'default',
-        });
-        if (!entityRoute) return <CellText title={title} />;
-        const routeParams = entityRouteParams(entityRef);
-        return (
-          <CellText
-            title={title.split(':')[1]}
-            href={entityRoute(routeParams)}
-          />
-        );
+        return <EntityRefLink entityRef={entityRef} />;
       },
     },
     {
-      id: 'kind',
-      label: 'Kind',
-      isRowHeader: false,
-      isSortable: false,
-      cell: item => {
+      title: 'Kind',
+      field: 'id',
+      render: item => {
         const entityRef = parseEntityRef(item.id);
-        const kind = entityRef.kind;
-        return <CellText title={kind} />;
+        return <>{entityRef.kind}</>;
       },
     },
     ...checks.map(c => ({
-      id: c.id,
-      label: c.id,
-      isRowHeader: false,
-      cell: (item: {
-        id: string;
-        results: Array<ComponentMigrationResult>;
-      }) => {
+      title: c.id,
+      field: c.id,
+      render: (item: RowData) => {
         const result = item.results.find(r => r.checkId === c.id);
-        if (result === undefined || !result.result)
-          return <CellText title="" leadingIcon={<StatusError />} />;
-        return <CellText title="" leadingIcon={<StatusOK />} />;
+        const icon =
+          result === undefined || !result.result ? (
+            <StatusError />
+          ) : (
+            <StatusOK />
+          );
+        if (result?.message) {
+          return <Tooltip title={result.message}>{icon}</Tooltip>;
+        }
+        return icon;
       },
     })),
   ];
 };
 
-export const MigrationEntityResultsTable = () => {
-  const migrationsApi = useApi(migrationsApiRef);
-  const entityRoute = useRouteRef(entityRouteRef);
-  const { entity } = useEntity<MigrationEntityV1>();
-  // const catalogApi = useApi(catalogApiRef);
+const useDetailPanelStyles = makeStyles(theme => ({
+  root: {
+    padding: theme.spacing(2, 4),
+    borderTop: `1px solid ${theme.palette.divider}`,
+    backgroundColor: theme.palette.background.default,
+  },
+  header: {
+    marginBottom: theme.spacing(1),
+    color: theme.palette.text.secondary,
+    textTransform: 'uppercase',
+    letterSpacing: '0.08em',
+  },
+  checkId: {
+    fontWeight: 'lighter',
+  },
+  icon: {
+    color: theme.palette.error.main,
+    minWidth: 32,
+  },
+}));
 
-  const [columns, setColumns] = useState(createColumns([], entityRoute));
-  const [selected, setSelected] = useState<string>('owned');
+const FailedChecksPanel = ({
+  results,
+}: {
+  results: Array<ComponentMigrationResult>;
+}) => {
+  const classes = useDetailPanelStyles();
+  const failed = results.filter(r => !r.result && r.message);
 
-  const { tableProps, reload } = useTable({
-    mode: 'offset',
-    async getData({ offset, pageSize, search, signal }) {
-      // get results for this migration
-      const r = await migrationsApi.getMigrationResults(entity, {
-        offset,
-        pageSize,
-        search,
-        signal,
-        filter: selected,
-      });
-      setColumns(createColumns(r.checks, entityRoute));
-      return {
-        data: r.components,
-        totalCount: r.totalCount,
-      };
-    },
-    paginationOptions: {
-      pageSize: 10,
-      pageSizeOptions: [5, 10, 25, 50],
-    },
-  });
-
-  const reloadRef = useRef(reload);
-  useEffect(() => {
-    reloadRef.current = reload;
-  }, [reload]);
-  useEffect(() => {
-    reloadRef.current();
-  }, [selected]);
+  if (failed.length === 0) return null;
 
   return (
-    <Box p="4" bg="neutral">
-      <Box p="4" bg="neutral">
+    <Box className={classes.root}>
+      <Typography variant="caption" className={classes.header}>
+        Failed checks
+      </Typography>
+      <List dense disablePadding>
+        {failed.map((r, i) => (
+          <Box key={r.checkId}>
+            {i > 0 && <Divider component="li" />}
+            <ListItem disableGutters>
+              <ListItemIcon className={classes.icon}>
+                <ErrorOutlineIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <Typography variant="body2" className={classes.checkId}>
+                    {r.checkId}
+                  </Typography>
+                }
+                secondary={r.message}
+              />
+            </ListItem>
+          </Box>
+        ))}
+      </List>
+    </Box>
+  );
+};
+
+export const MigrationEntityResultsTable = () => {
+  const migrationsApi = useApi(migrationsApiRef);
+  const { entity } = useEntity<MigrationEntityV1>();
+  const [selected, setSelected] = useState<string>('owned');
+
+  const { loading, value } = useAsync(async () => {
+    return await migrationsApi.getMigrationResults(entity, {
+      offset: 0,
+      pageSize: 500,
+      filter: selected,
+    });
+  }, [entity, migrationsApi, selected]);
+
+  const columns = createColumns(value?.checks ?? []);
+
+  return (
+    <Box p={2}>
+      <Box mb={2}>
         <ToggleButtonGroup
-          selectionMode="single"
-          defaultSelectedKeys={[selected]}
-          onSelectionChange={(keys: Set<Key>) =>
-            setSelected(Array.from(keys)[0]?.toString())
-          }
-          disallowEmptySelection
+          exclusive
+          value={selected}
+          onChange={(_e, val) => {
+            if (val !== null) setSelected(val);
+          }}
+          size="small"
         >
-          <ToggleButton id="owned" key="owned">
-            Owned
-          </ToggleButton>
-          <ToggleButton id="all" key="all">
-            All
-          </ToggleButton>
+          <ToggleButton value="owned">Owned</ToggleButton>
+          <ToggleButton value="all">All</ToggleButton>
         </ToggleButtonGroup>
       </Box>
-      <Table columnConfig={columns} {...tableProps} />
+      <Table
+        title="Migration Results"
+        columns={columns}
+        data={value?.components ?? []}
+        isLoading={loading}
+        options={{ paging: true, pageSize: 10, search: true }}
+        detailPanel={[
+          {
+            tooltip: 'Show failed check messages',
+            render: ({ rowData }: { rowData: RowData }) => (
+              <FailedChecksPanel results={rowData.results} />
+            ),
+          },
+        ]}
+      />
     </Box>
   );
 };
