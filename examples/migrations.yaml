@@ -18,6 +18,7 @@ spec:
     kind: Component
   checks:
     - checkId: 'entity-metadata-checker'
+    - checkId: 'contains-d09'
 ---
 apiVersion: backstage.district09.gent/v1
 kind: Migration

@@ -1,8 +1,7 @@
 {
-  "name": "@internal/backstage-plugin-migrations-backend-module-built-in-checks",
-  "version": "0.1.0",
-  "license": "Apache-2.0",
-  "private": true,
+  "name": "@district09/backstage-plugin-migrations-backend-module-built-in-checks",
+  "version": "0.1.2",
+  "license": "MIT",
   "description": "The built-in-checks backend module for the migrations plugin.",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -27,11 +26,11 @@
   },
   "dependencies": {
     "@backstage/backend-plugin-api": "backstage:^",
-    "@backstage/plugin-catalog-node": "backstage:^",
     "@backstage/catalog-model": "backstage:^",
+    "@backstage/plugin-catalog-node": "backstage:^",
     "@district09/backstage-plugin-migrations-backend": "workspace:^",
-    "@district09/backstage-plugin-migrations-node": "workspace:^",
-    "@district09/backstage-plugin-migrations-common": "workspace:^"
+    "@district09/backstage-plugin-migrations-common": "workspace:^",
+    "@district09/backstage-plugin-migrations-node": "workspace:^"
   },
   "devDependencies": {
     "@backstage/backend-test-utils": "backstage:^",

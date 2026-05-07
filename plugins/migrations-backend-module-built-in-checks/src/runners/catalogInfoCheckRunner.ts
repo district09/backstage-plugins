@@ -8,6 +8,7 @@ import {
   MigrationCheckResult,
 } from '@district09/backstage-plugin-migrations-node';
 import { type CatalogInfoCheckerConfig, Operation } from '../types';
+import { access } from '../util';
 
 const buildDescription = (checkConfig: CatalogInfoCheckerConfig): string => {
   switch (checkConfig.op) {
@@ -46,7 +47,7 @@ export class CatalogInfoCheckRunner
     checkConfig: CatalogInfoCheckerConfig;
   }) {
     super({ catalog, logger, auth });
-    this.id = `catalog-info-${checkConfig.id}`;
+    this.id = checkConfig.id;
     this.description = buildDescription(checkConfig);
     this.config = checkConfig;
   }
@@ -55,20 +56,51 @@ export class CatalogInfoCheckRunner
     entity: Entity,
     migration: MigrationEntityV1,
   ): Promise<MigrationCheckResult> {
+    this.logger.info(
+      `Running catalog.info.yaml check on entity ${entity.metadata.name} for migration ${migration.metadata.name}`,
+    );
     try {
+      const pathValue = access(entity, this.config.path);
       switch (this.config.op) {
         case Operation.EXISTS:
           return {
-
+            result: pathValue !== undefined,
+            message:
+              pathValue !== undefined
+                ? 'Path exists'
+                : `Path ${this.config.path} does not exist`,
           };
         case Operation.NOT_EXISTS:
-          break;
+          return {
+            result: pathValue === undefined,
+            message:
+              pathValue === undefined
+                ? 'Path does not exist'
+                : `Path ${this.config.path} exists`,
+          };
         case Operation.EQUALS:
-          break;
+          return {
+            result: pathValue === this.config.value,
+            message:
+              pathValue === this.config.value
+                ? `Path ${this.config.path} equals ${this.config.value}`
+                : `Path ${this.config.path} does not equal ${this.config.value} - was ${pathValue}`,
+          };
         case Operation.CONTAINS:
-          break;
+          return {
+            result: pathValue?.includes(this.config.value),
+            message: pathValue?.includes(this.config.value)
+              ? `Path ${this.config.path} contains ${this.config.value}`
+              : `Path ${this.config.path} does not contain ${this.config.value}`,
+          };
         case Operation.NOT_EQUALS:
-          break;
+          return {
+            result: pathValue !== this.config.value,
+            message:
+              pathValue !== this.config.value
+                ? `Path ${this.config.path} does not equal ${this.config.value}`
+                : `Path ${this.config.path} equals ${this.config.value}`,
+          };
         default:
           throw new Error(
             `Unknown operation ${this.config.op} for catalog.info.yaml check`,
@@ -79,6 +111,7 @@ export class CatalogInfoCheckRunner
         `Error running catalog.info.yaml check: ${e?.message}`,
         e,
       );
+      return { result: false, message: `Error: ${e?.message}` };
     }
   }
 }

@@ -4857,6 +4857,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@district09/backstage-plugin-migrations-backend-module-built-in-checks@workspace:^, @district09/backstage-plugin-migrations-backend-module-built-in-checks@workspace:plugins/migrations-backend-module-built-in-checks":
+  version: 0.0.0-use.local
+  resolution: "@district09/backstage-plugin-migrations-backend-module-built-in-checks@workspace:plugins/migrations-backend-module-built-in-checks"
+  dependencies:
+    "@backstage/backend-plugin-api": "backstage:^"
+    "@backstage/backend-test-utils": "backstage:^"
+    "@backstage/catalog-model": "backstage:^"
+    "@backstage/cli": "backstage:^"
+    "@backstage/plugin-catalog-node": "backstage:^"
+    "@district09/backstage-plugin-migrations-backend": "workspace:^"
+    "@district09/backstage-plugin-migrations-common": "workspace:^"
+    "@district09/backstage-plugin-migrations-node": "workspace:^"
+  languageName: unknown
+  linkType: soft
+
 "@district09/backstage-plugin-migrations-backend@workspace:^, @district09/backstage-plugin-migrations-backend@workspace:plugins/migrations-backend":
   version: 0.0.0-use.local
   resolution: "@district09/backstage-plugin-migrations-backend@workspace:plugins/migrations-backend"
@@ -5720,17 +5735,6 @@ __metadata:
   checksum: 10c0/82951cb7f3762dd78cca2ea291396841e3f4adfe26004b5badfed1cec4b6a04bb567dff94d0e41b35c61bdd7957317c64c22f58074d14b238d44e44d9e420019
   languageName: node
   linkType: hard
-
-"@internal/backstage-plugin-migrations-backend-module-built-in-checks@workspace:^, @internal/backstage-plugin-migrations-backend-module-built-in-checks@workspace:plugins/migrations-backend-module-built-in-checks":
-  version: 0.0.0-use.local
-  resolution: "@internal/backstage-plugin-migrations-backend-module-built-in-checks@workspace:plugins/migrations-backend-module-built-in-checks"
-  dependencies:
-    "@backstage/backend-plugin-api": "backstage:^"
-    "@backstage/backend-test-utils": "backstage:^"
-    "@backstage/cli": "backstage:^"
-    "@district09/backstage-plugin-migrations-backend": "workspace:^"
-  languageName: unknown
-  linkType: soft
 
 "@internationalized/date@npm:^3.12.1":
   version: 3.12.1
@@ -14371,9 +14375,9 @@ __metadata:
     "@backstage/plugin-techdocs-backend": "backstage:^"
     "@district09/backstage-plugin-catalog-backend-module-migrations": "workspace:^"
     "@district09/backstage-plugin-migrations-backend": "workspace:^"
+    "@district09/backstage-plugin-migrations-backend-module-built-in-checks": "workspace:^"
     "@district09/backstage-plugin-migrations-common": "workspace:^"
     "@district09/backstage-plugin-migrations-node": "workspace:^"
-    "@internal/backstage-plugin-migrations-backend-module-built-in-checks": "workspace:^"
     app: "link:../app"
     better-sqlite3: "npm:^12.0.0"
     node-gyp: "npm:^10.0.0"
