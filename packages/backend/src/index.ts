@@ -72,4 +72,5 @@ backend.add(
 );
 backend.add(import('./runners/module'));
 
+backend.add(import('@internal/backstage-plugin-migrations-backend-module-built-in-checks'));
 backend.start();

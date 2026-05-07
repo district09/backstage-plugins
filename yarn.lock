@@ -2429,7 +2429,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@backstage/core-compat-api@backstage:^::backstage=1.50.4&npm=0.5.10, @backstage/core-compat-api@npm:^0.5.10":
+"@backstage/core-compat-api@npm:^0.5.10":
   version: 0.5.10
   resolution: "@backstage/core-compat-api@npm:0.5.10"
   dependencies:
@@ -4909,9 +4909,7 @@ __metadata:
     "@backstage/catalog-client": "backstage:^"
     "@backstage/catalog-model": "backstage:^"
     "@backstage/cli": "backstage:^"
-    "@backstage/core-compat-api": "backstage:^"
     "@backstage/core-components": "backstage:^"
-    "@backstage/core-plugin-api": "backstage:^"
     "@backstage/frontend-defaults": "backstage:^"
     "@backstage/frontend-plugin-api": "backstage:^"
     "@backstage/frontend-test-utils": "backstage:^"
@@ -4921,9 +4919,7 @@ __metadata:
     "@backstage/theme": "backstage:^"
     "@backstage/ui": "backstage:^"
     "@district09/backstage-plugin-migrations-common": "workspace:^"
-    "@material-ui/core": "npm:^4.9.13"
-    "@material-ui/icons": "npm:^4.9.1"
-    "@material-ui/lab": "npm:^4.0.0-alpha.61"
+    "@remixicon/react": "npm:^4.0.0"
     "@testing-library/jest-dom": "npm:^6.0.0"
     "@testing-library/react": "npm:^14.0.0"
     "@testing-library/user-event": "npm:^14.0.0"
@@ -5724,6 +5720,17 @@ __metadata:
   checksum: 10c0/82951cb7f3762dd78cca2ea291396841e3f4adfe26004b5badfed1cec4b6a04bb567dff94d0e41b35c61bdd7957317c64c22f58074d14b238d44e44d9e420019
   languageName: node
   linkType: hard
+
+"@internal/backstage-plugin-migrations-backend-module-built-in-checks@workspace:^, @internal/backstage-plugin-migrations-backend-module-built-in-checks@workspace:plugins/migrations-backend-module-built-in-checks":
+  version: 0.0.0-use.local
+  resolution: "@internal/backstage-plugin-migrations-backend-module-built-in-checks@workspace:plugins/migrations-backend-module-built-in-checks"
+  dependencies:
+    "@backstage/backend-plugin-api": "backstage:^"
+    "@backstage/backend-test-utils": "backstage:^"
+    "@backstage/cli": "backstage:^"
+    "@district09/backstage-plugin-migrations-backend": "workspace:^"
+  languageName: unknown
+  linkType: soft
 
 "@internationalized/date@npm:^3.12.1":
   version: 3.12.1
@@ -9087,7 +9094,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remixicon/react@npm:^4.6.0":
+"@remixicon/react@npm:^4.0.0, @remixicon/react@npm:^4.6.0":
   version: 4.9.0
   resolution: "@remixicon/react@npm:4.9.0"
   peerDependencies:
@@ -14366,6 +14373,7 @@ __metadata:
     "@district09/backstage-plugin-migrations-backend": "workspace:^"
     "@district09/backstage-plugin-migrations-common": "workspace:^"
     "@district09/backstage-plugin-migrations-node": "workspace:^"
+    "@internal/backstage-plugin-migrations-backend-module-built-in-checks": "workspace:^"
     app: "link:../app"
     better-sqlite3: "npm:^12.0.0"
     node-gyp: "npm:^10.0.0"

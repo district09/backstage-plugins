@@ -1,4 +1,4 @@
-import { Chip, Grid, Typography } from '@material-ui/core';
+import { Tag, Grid, Text } from '@backstage/ui';
 import {
   StatusError,
   StatusOK,
@@ -20,7 +20,8 @@ type CombinedResults = ComponentMigrationResult & {
   in_migrations: Set<string>;
 };
 
-export const EntityMigrationContent = () => {
+/** Shown on the "Migrations" tab of a Component or API entity page. */
+export const EntityContentMigration = () => {
   const migrationsApi = useApi(migrationsApiRef);
   const { entity } = useEntity();
   const entityRepresentation = useEntityPresentation(entity);
@@ -58,7 +59,7 @@ export const EntityMigrationContent = () => {
       title: 'Check ID',
       field: 'checkId',
       type: 'string',
-      render: rowData => <Typography>{startCase(rowData.checkId)}</Typography>,
+      render: rowData => <Text>{startCase(rowData.checkId)}</Text>,
     },
     {
       title: 'Result',
@@ -74,7 +75,7 @@ export const EntityMigrationContent = () => {
       render: row => (
         <>
           {[...row.in_migrations].map(m => (
-            <Chip key={m} title={m} label={entityRepresentation.primaryTitle} />
+            <Tag key={m}>{entityRepresentation.primaryTitle}</Tag>
           ))}
         </>
       ),
@@ -87,8 +88,8 @@ export const EntityMigrationContent = () => {
   const data = Object.values(value.results);
 
   return (
-    <Grid container spacing={2}>
-      <Grid md={12} item>
+    <Grid.Root columns={{ sm: '12' }} gap="4">
+      <Grid.Item colSpan={{ sm: '12' }}>
         <Table
           title="Check Results"
           columns={columns}
@@ -99,7 +100,7 @@ export const EntityMigrationContent = () => {
           }}
           isLoading={loading}
         />
-      </Grid>
-    </Grid>
+      </Grid.Item>
+    </Grid.Root>
   );
 };

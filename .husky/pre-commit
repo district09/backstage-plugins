@@ -1,5 +1,4 @@
-#!/usr/bin/env sh
 . .husky/common.sh
 echo "Running pre-commit hook..."
-yarn prettier:fix
-git update-index --again
+
+npx lint-staged --allow-empty

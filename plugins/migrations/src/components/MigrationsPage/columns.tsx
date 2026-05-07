@@ -2,7 +2,7 @@ import { LinearGauge, Progress, TableColumn } from '@backstage/core-components';
 import { CatalogTableRow } from '@backstage/plugin-catalog';
 import { EntityRefLink } from '@backstage/plugin-catalog-react';
 import { MigrationEntityV1 } from '@district09/backstage-plugin-migrations-common';
-import { useApi } from '@backstage/core-plugin-api';
+import { useApi } from '@backstage/frontend-plugin-api';
 import { migrationsApiRef } from '../../api';
 import { useAsync } from 'react-use';
 

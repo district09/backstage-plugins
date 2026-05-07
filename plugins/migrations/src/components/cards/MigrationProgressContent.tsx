@@ -1,14 +1,14 @@
-import { Grid } from '@material-ui/core';
+import { Grid } from '@backstage/ui';
 import { MigrationProgressCard } from './MigrationProgressCard.tsx';
 import { MigrationRunnersSummary } from './MigrationRunnersSummary.tsx';
 
 export const MigrationProgressContent = () => (
-  <Grid container>
-    <Grid item xs={4}>
+  <Grid.Root columns={{ sm: '12' }} gap="4">
+    <Grid.Item colSpan={{ sm: '4' }}>
       <MigrationProgressCard />
-    </Grid>
-    <Grid item xs={8}>
+    </Grid.Item>
+    <Grid.Item colSpan={{ sm: '8' }}>
       <MigrationRunnersSummary />
-    </Grid>
-  </Grid>
+    </Grid.Item>
+  </Grid.Root>
 );

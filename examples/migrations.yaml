@@ -18,3 +18,44 @@ spec:
     kind: Component
   checks:
     - checkId: 'entity-metadata-checker'
+---
+apiVersion: backstage.district09.gent/v1
+kind: Migration
+metadata:
+  name: lifecycle-production-migration
+  title: Lifecycle to Production
+  tags:
+    - catalog
+    - lifecycle
+  description: |
+    Ensures all active services have their lifecycle set to 'production' rather than 'experimental'.
+spec:
+  type: catalog
+  owner: guests
+  dueDate: 2027-06-01
+  mandatory: true
+  entityFilter:
+    kind: Component
+  checks:
+    - checkId: 'entity-metadata-checker'
+---
+apiVersion: backstage.district09.gent/v1
+kind: Migration
+metadata:
+  name: api-documentation-migration
+  title: API Documentation Migration
+  tags:
+    - api
+    - documentation
+    - openapi
+  description: |
+    Ensures all APIs have up-to-date OpenAPI or gRPC definitions and a proper description.
+spec:
+  type: api
+  owner: guests
+  dueDate: 2027-09-01
+  mandatory: false
+  entityFilter:
+    kind: API
+  checks:
+    - checkId: 'entity-metadata-checker'

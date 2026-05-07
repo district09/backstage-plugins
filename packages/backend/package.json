@@ -51,6 +51,7 @@
     "@district09/backstage-plugin-migrations-backend": "workspace:^",
     "@district09/backstage-plugin-migrations-common": "workspace:^",
     "@district09/backstage-plugin-migrations-node": "workspace:^",
+    "@internal/backstage-plugin-migrations-backend-module-built-in-checks": "workspace:^",
     "app": "link:../app",
     "better-sqlite3": "^12.0.0",
     "node-gyp": "^10.0.0",
