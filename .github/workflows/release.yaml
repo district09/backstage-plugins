@@ -120,3 +120,6 @@ jobs:
         # publish catalog-backend-module-migrations
       - run: yarn --cwd plugins/catalog-backend-module-migrations build
       - run: yarn --cwd plugins/catalog-backend-module-migrations npm publish
+        # publish backstage-plugin-migrations-backend-module-built-in-checks
+      - run: yarn --cwd plugins/migrations-backend-module-built-in-checks build
+      - run: yarn --cwd plugins/migrations-backend-module-built-in-checks npm publish

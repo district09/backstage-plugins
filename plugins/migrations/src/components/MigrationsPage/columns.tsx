@@ -17,18 +17,10 @@ const MigrationProgressRow = ({ entity }: { entity: MigrationEntityV1 }) => {
   if (error) {
     return <div>Error loading migration results</div>;
   }
-  const progress: boolean[] = [];
-  value.components
-    .flatMap(e => e.results)
-    .forEach(r => progress.push(r.result));
-
-  const total = progress.length;
-  const passed = progress.filter(r => r).length;
-
-  // eslint-disable-next-line no-console
-  console.log(
-    `Migration ${entity.metadata.name} total: ${total}, passed: ${passed}`,
-  );
+  const total = value.components.length;
+  const passed = value.components.filter(
+    c => c.results.length > 0 && c.results.every(r => r.result),
+  ).length;
 
   return <LinearGauge value={total > 0 ? passed / total : 0} />;
 };

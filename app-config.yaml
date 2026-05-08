@@ -156,12 +156,3 @@ mcpActions:
   name: 'My Company Backstage' # defaults to "backstage"
   description: 'Tools for managing your software catalog, creating new services
     from templates, and exploring your developer portal' # optional
-
-migrations:
-  checks:
-    builtIn:
-      catalogInfo:
-        - op: contains
-          path: metadata.name
-          value: d09
-          id: contains-d09

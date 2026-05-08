@@ -9,6 +9,7 @@ import {
 import {
   StatusError,
   StatusOK,
+  StatusWarning,
   Table,
   TableColumn,
 } from '@backstage/core-components';
@@ -55,32 +56,42 @@ const createColumns = (
         title: c.id,
         field: c.id,
         render: (item: RowData) => {
-          const result = item.results.find(r => r.checkId === c.id);
-          const icon =
-            result === undefined || !result.result ? (
-              <StatusError />
-            ) : (
-              <StatusOK />
-            );
-          if (result?.message) {
+          const results = item.results.filter(r => r.checkId === c.id);
+          const passCount = results.filter(r => r.result).length;
+          const isPartial = passCount > 0 && passCount < results.length;
+          const allPassed = results.length > 0 && passCount === results.length;
+
+          let icon;
+          if (allPassed) {
+            icon = <StatusOK />;
+          } else {
+            icon = isPartial ? <StatusWarning /> : <StatusError />;
+          }
+
+          const messages = results
+            .filter(r => r.message)
+            .map(r => r.message)
+            .join('\n');
+          if (messages) {
             return (
               <TooltipTrigger>
                 {icon}
-                <Tooltip>{result.message}</Tooltip>
+                <Tooltip>{messages}</Tooltip>
               </TooltipTrigger>
             );
           }
           return icon;
         },
         customSort: (a, b) => {
-          const aresult = a.results.find(r => r.checkId === c.id);
-          const bresult = b.results.find(r => r.checkId === c.id);
-          if (aresult === undefined) return 1;
-          if (bresult === undefined) return -1;
-          if (aresult.result !== bresult.result) {
-            return aresult.result ? -1 : 1;
-          }
-          return 0;
+          const score = (row: RowData) => {
+            const results = row.results.filter(r => r.checkId === c.id);
+            if (results.length === 0) return 3; // no results — sort last
+            const passCount = results.filter(r => r.result).length;
+            if (passCount === results.length) return 0; // all passed
+            if (passCount > 0) return 1; // partial
+            return 2; // all failed
+          };
+          return score(a) - score(b);
         },
       };
       return column;

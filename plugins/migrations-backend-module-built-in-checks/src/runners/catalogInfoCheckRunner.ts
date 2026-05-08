@@ -5,10 +5,12 @@ import { MigrationEntityV1 } from '@district09/backstage-plugin-migrations-commo
 import {
   BaseMigrationChecker,
   MigrationChecker,
-  MigrationCheckResult,
+  MigrationCheckResultEmitter,
 } from '@district09/backstage-plugin-migrations-node';
 import { type CatalogInfoCheckerConfig, Operation } from '../types';
 import { access } from '../util';
+
+const CATALOG_INFO_CHECK_ID = 'catalog-info';
 
 const buildDescription = (checkConfig: CatalogInfoCheckerConfig): string => {
   switch (checkConfig.op) {
@@ -31,87 +33,119 @@ export class CatalogInfoCheckRunner
   extends BaseMigrationChecker
   implements MigrationChecker
 {
-  id: string;
-  description: string;
-  config: CatalogInfoCheckerConfig;
+  id = CATALOG_INFO_CHECK_ID;
+  description =
+    'Runs catalog-info.yaml checks configured on the migration entity';
 
   constructor({
     catalog,
     logger,
     auth,
-    checkConfig,
   }: {
     catalog: typeof catalogServiceRef.T;
     logger: typeof coreServices.logger.T;
     auth: typeof coreServices.auth.T;
-    checkConfig: CatalogInfoCheckerConfig;
   }) {
     super({ catalog, logger, auth });
-    this.id = checkConfig.id;
-    this.description = buildDescription(checkConfig);
-    this.config = checkConfig;
   }
 
   async runCheck(
     entity: Entity,
     migration: MigrationEntityV1,
-  ): Promise<MigrationCheckResult> {
+    emit: MigrationCheckResultEmitter,
+  ): Promise<void> {
     this.logger.info(
-      `Running catalog.info.yaml check on entity ${entity.metadata.name} for migration ${migration.metadata.name}`,
+      `Running catalog-info.yaml checks on entity ${entity.metadata.name} for migration ${migration.metadata.name}`,
     );
-    try {
-      const pathValue = access(entity, this.config.path);
-      switch (this.config.op) {
-        case Operation.EXISTS:
-          return {
-            result: pathValue !== undefined,
-            message:
-              pathValue !== undefined
-                ? 'Path exists'
-                : `Path ${this.config.path} does not exist`,
-          };
-        case Operation.NOT_EXISTS:
-          return {
-            result: pathValue === undefined,
-            message:
-              pathValue === undefined
-                ? 'Path does not exist'
-                : `Path ${this.config.path} exists`,
-          };
-        case Operation.EQUALS:
-          return {
-            result: pathValue === this.config.value,
-            message:
-              pathValue === this.config.value
-                ? `Path ${this.config.path} equals ${this.config.value}`
-                : `Path ${this.config.path} does not equal ${this.config.value} - was ${pathValue}`,
-          };
-        case Operation.CONTAINS:
-          return {
-            result: pathValue?.includes(this.config.value),
-            message: pathValue?.includes(this.config.value)
-              ? `Path ${this.config.path} contains ${this.config.value}`
-              : `Path ${this.config.path} does not contain ${this.config.value}`,
-          };
-        case Operation.NOT_EQUALS:
-          return {
-            result: pathValue !== this.config.value,
-            message:
-              pathValue !== this.config.value
-                ? `Path ${this.config.path} does not equal ${this.config.value}`
-                : `Path ${this.config.path} equals ${this.config.value}`,
-          };
-        default:
-          throw new Error(
-            `Unknown operation ${this.config.op} for catalog.info.yaml check`,
-          );
+
+    const catalogInfoChecks = migration.spec.checks.filter(
+      c => c.checkId === CATALOG_INFO_CHECK_ID,
+    );
+
+    for (const check of catalogInfoChecks) {
+      const checkConfig = check.config as unknown as CatalogInfoCheckerConfig;
+      if (!checkConfig) {
+        this.logger.warn(
+          `No config found for catalog-info check in migration ${migration.metadata.name}`,
+        );
+        continue;
       }
-    } catch (e: any) {
-      this.logger.error(
-        `Error running catalog.info.yaml check: ${e?.message}`,
-        e,
-      );
-      return { result: false, message: `Error: ${e?.message}` };
+
+      const description = buildDescription(checkConfig);
+      try {
+        const pathValue = access(entity, checkConfig.path);
+        switch (checkConfig.op) {
+          case Operation.EXISTS:
+            emit({
+              checkId: CATALOG_INFO_CHECK_ID,
+              description,
+              result: pathValue !== undefined,
+              message:
+                pathValue !== undefined
+                  ? undefined
+                  : `Path ${checkConfig.path} does not exist`,
+            });
+            break;
+          case Operation.NOT_EXISTS:
+            emit({
+              checkId: CATALOG_INFO_CHECK_ID,
+              description,
+              result: pathValue === undefined,
+              message:
+                pathValue === undefined
+                  ? undefined
+                  : `Path ${checkConfig.path} exists`,
+            });
+            break;
+          case Operation.EQUALS:
+            emit({
+              checkId: CATALOG_INFO_CHECK_ID,
+              description,
+              result: pathValue === checkConfig.value,
+              message:
+                pathValue === checkConfig.value
+                  ? undefined
+                  : `Path ${checkConfig.path} does not equal ${checkConfig.value} - was ${pathValue}`,
+            });
+            break;
+          case Operation.CONTAINS:
+            emit({
+              checkId: CATALOG_INFO_CHECK_ID,
+              description,
+              result: pathValue?.includes(checkConfig.value),
+              message: pathValue?.includes(checkConfig.value)
+                ? undefined
+                : `Path ${checkConfig.path} does not contain ${checkConfig.value}`,
+            });
+            break;
+          case Operation.NOT_EQUALS:
+            emit({
+              checkId: CATALOG_INFO_CHECK_ID,
+              description,
+              result: pathValue !== checkConfig.value,
+              message:
+                pathValue !== checkConfig.value
+                  ? undefined
+                  : `Path ${checkConfig.path} equals ${checkConfig.value}`,
+            });
+            break;
+          default:
+            throw new Error(
+              `Unknown operation ${checkConfig.op} for catalog.info.yaml check`,
+            );
+        }
+      } catch (e: any) {
+        this.logger.error(
+          `Error running catalog.info.yaml check: ${e?.message}`,
+          e,
+        );
+        emit({
+          checkId: CATALOG_INFO_CHECK_ID,
+          description,
+          result: false,
+          message: `Error: ${e?.message}`,
+        });
+      }
     }
   }
 }
