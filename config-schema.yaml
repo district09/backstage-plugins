@@ -1,8 +1,8 @@
 schemas:
-  - packageName: "@backstage/cli"
+  - packageName: '@backstage/cli'
     value:
       $schema: https://backstage.io/schema/config-v1
-      title: "@backstage/cli"
+      title: '@backstage/cli'
       type: object
       properties:
         app:
@@ -41,7 +41,8 @@ schemas:
                 sessionReplaySampleRate:
                   type: number
                   visibility: frontend
-                  description: sample rate of session replays based upon already sampled Datadog
+                  description:
+                    sample rate of session replays based upon already sampled Datadog
                     RUM events
               required:
                 - clientToken
@@ -53,16 +54,19 @@ schemas:
                 host:
                   type: string
                   visibility: frontend
-                  description: The host that the frontend should be bound to. Only used for local
+                  description:
+                    The host that the frontend should be bound to. Only used for local
                     development.
                 port:
                   type: number
                   visibility: frontend
-                  description: The port that the frontend should be bound to. Only used for local
+                  description:
+                    The port that the frontend should be bound to. Only used for local
                     development.
             https:
               type: object
-              description: Only used for local development. The https object is passed to
+              description:
+                Only used for local development. The https object is passed to
                 webpack in order to enable using https on localhost.
               properties:
                 certificate:
@@ -81,10 +85,10 @@ schemas:
                       visibility: secret
                       description: Https Certificate. Use $file to load in a file
     path: node_modules/@backstage/cli/package.json
-  - packageName: "@backstage/plugin-user-settings"
+  - packageName: '@backstage/plugin-user-settings'
     value:
       $schema: https://backstage.io/schema/config-v1
-      title: "@backstage/user-settings"
+      title: '@backstage/user-settings'
       type: object
       properties:
         auth:
@@ -112,7 +116,7 @@ schemas:
       required:
         - migrations
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@district09/backstage-plugin-migrations-backend"
+    packageName: '@district09/backstage-plugin-migrations-backend'
   - path: plugins/migrations-backend-module-built-in-checks/config.d.ts
     value:
       type: object
@@ -138,7 +142,7 @@ schemas:
       required:
         - migrations
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@district09/backstage-plugin-migrations-backend-module-built-in-checks"
+    packageName: '@district09/backstage-plugin-migrations-backend-module-built-in-checks'
   - path: node_modules/@backstage/core-components/config.d.ts
     value:
       type: object
@@ -194,7 +198,7 @@ schemas:
                   visibility: frontend
                   type: boolean
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/core-components"
+    packageName: '@backstage/core-components'
   - path: node_modules/@backstage/plugin-catalog/config.d.ts
     value:
       type: object
@@ -211,7 +215,7 @@ schemas:
                       type: number
                 - type: boolean
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-catalog"
+    packageName: '@backstage/plugin-catalog'
   - path: node_modules/@backstage/plugin-catalog-import/config.d.ts
     value:
       type: object
@@ -240,7 +244,7 @@ schemas:
                   visibility: frontend
                   type: string
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-catalog-import"
+    packageName: '@backstage/plugin-catalog-import'
   - path: node_modules/@backstage/plugin-search/config.d.ts
     value:
       type: object
@@ -250,7 +254,8 @@ schemas:
           type: object
           properties:
             defaultType:
-              description: The default search type to be used when no specific type is
+              description:
+                The default search type to be used when no specific type is
                 selected.
               visibility: frontend
               type: string
@@ -276,7 +281,7 @@ schemas:
                     - 50
                   type: number
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-search"
+    packageName: '@backstage/plugin-search'
   - path: node_modules/@backstage/plugin-techdocs/config.d.ts
     value:
       type: object
@@ -293,7 +298,8 @@ schemas:
                 - local
               type: string
             legacyUseCaseSensitiveTripletPaths:
-              description: Allows fallback to case-sensitive triplets in case of migration
+              description:
+                Allows fallback to case-sensitive triplets in case of migration
                 issues.
               visibility: frontend
               type: boolean
@@ -342,7 +348,7 @@ schemas:
                   items:
                     type: string
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-techdocs"
+    packageName: '@backstage/plugin-techdocs'
   - path: node_modules/@backstage/backend-defaults/config.d.ts
     value:
       type: object
@@ -479,13 +485,16 @@ schemas:
               type: object
               properties:
                 headersTimeout:
-                  description: Sets the timeout value for receiving the complete HTTP headers from
+                  description:
+                    Sets the timeout value for receiving the complete HTTP headers from
                     the client.
                 requestTimeout:
-                  description: Sets the timeout value for receiving the entire request (headers
+                  description:
+                    Sets the timeout value for receiving the entire request (headers
                     and body) from the client.
                 keepAliveTimeout:
-                  description: Sets the timeout value for inactivity on a socket during
+                  description:
+                    Sets the timeout value for inactivity on a socket during
                     keep-alive.
                 timeout:
                   description: Sets the timeout value for sockets.
@@ -493,7 +502,8 @@ schemas:
                   description: Limits maximum incoming headers count.
                   type: number
                 maxRequestsPerSocket:
-                  description: Sets the maximum number of requests socket can handle before
+                  description:
+                    Sets the maximum number of requests socket can handle before
                     closing keep alive connection.
                   type: number
             auditor:
@@ -688,9 +698,11 @@ schemas:
               type: object
               properties:
                 keys:
-                  description: Keys shared by all backends for signing and validating backend
+                  description:
+                    Keys shared by all backends for signing and validating backend
                     tokens.
-                  deprecated: this will be removed when the backwards compatibility is no longer
+                  deprecated:
+                    this will be removed when the backwards compatibility is no longer
                     needed with backend-common
                   type: array
                   items:
@@ -757,14 +769,16 @@ schemas:
                           type: object
                           properties:
                             keys:
-                              description: Must be declared at least once and the first one will be used for
+                              description:
+                                Must be declared at least once and the first one will be used for
                                 signing.
                               type: array
                               items:
                                 type: object
                                 properties:
                                   publicKeyFile:
-                                    description: Path to the public key file in the SPKI format. Should be an
+                                    description:
+                                      Path to the public key file in the SPKI format. Should be an
                                       absolute path.
                                     type: string
                                   privateKeyFile:
@@ -1268,7 +1282,8 @@ schemas:
                           - options
                           - type
             database:
-              description: Database connection configuration, select base database type using
+              description:
+                Database connection configuration, select base database type using
                 the `client` field
               type: object
               properties:
@@ -1281,14 +1296,16 @@ schemas:
                     - sqlite3
                   type: string
                 connection:
-                  description: Base database connection string, or object with individual
+                  description:
+                    Base database connection string, or object with individual
                     connection properties
                   visibility: secret
                   anyOf:
                     - type: object
                       properties:
                         type:
-                          description: The specific config for Azure database for PostgreSQL connections
+                          description:
+                            The specific config for Azure database for PostgreSQL connections
                             with Entra authentication
                           type: string
                           const: azure
@@ -1329,7 +1346,8 @@ schemas:
                           type: string
                           const: cloudsql
                         instance:
-                          description: The instance connection name for the cloudsql instance, e.g.
+                          description:
+                            The instance connection name for the cloudsql instance, e.g.
                             `project:region:instance`
                           type: string
                         ipAddressType:
@@ -1364,7 +1382,8 @@ schemas:
                           description: The port number the database is listening on.
                           type: number
                         user:
-                          description: The database user to authenticate as. This user must have the
+                          description:
+                            The database user to authenticate as. This user must have the
                             `rds_iam` role granted.
                           type: string
                         region:
@@ -1473,7 +1492,8 @@ schemas:
                                 type: string
                                 const: cloudsql
                               instance:
-                                description: The instance connection name for the cloudsql instance, e.g.
+                                description:
+                                  The instance connection name for the cloudsql instance, e.g.
                                   `project:region:instance`
                                 type: string
                             required:
@@ -1530,7 +1550,8 @@ schemas:
                 - client
                 - connection
             cache:
-              description: Cache connection configuration, select cache type using the `store`
+              description:
+                Cache connection configuration, select cache type using the `store`
                 field
               anyOf:
                 - type: object
@@ -1558,7 +1579,8 @@ schemas:
                       type: object
                       properties:
                         client:
-                          description: An optional Redis client configuration.  These options are passed
+                          description:
+                            An optional Redis client configuration.  These options are passed
                             to the `@keyv/redis` client.
                           type: object
                           properties:
@@ -1572,7 +1594,8 @@ schemas:
                               description: Number of keys to delete in a single batch.
                               type: number
                             useUnlink:
-                              description: Enable Unlink instead of using Del for clearing keys. This is more
+                              description:
+                                Enable Unlink instead of using Del for clearing keys. This is more
                                 performant but may not be supported by all Redis
                                 versions.
                               type: boolean
@@ -1618,12 +1641,14 @@ schemas:
                                 connections.
                               type: boolean
                             useReplicas:
-                              description: When `true`, distribute load by executing readonly commands (such
+                              description:
+                                When `true`, distribute load by executing readonly commands (such
                                 as `GET`, `GEOSEARCH`, etc.) across all cluster
                                 nodes. When `false`, only use master nodes.
                               type: boolean
                             maxCommandRedirections:
-                              description: The maximum number of times a command will be redirected due to
+                              description:
+                                The maximum number of times a command will be redirected due to
                                 `MOVED` or `ASK` errors.
                               type: number
                           required:
@@ -1647,7 +1672,8 @@ schemas:
                       type: object
                       properties:
                         client:
-                          description: An optional Valkey client configuration.  These options are passed
+                          description:
+                            An optional Valkey client configuration.  These options are passed
                             to the `@keyv/valkey` client.
                           type: object
                           properties:
@@ -1655,7 +1681,8 @@ schemas:
                               description: Namespace and separator used for prefixing keys.
                               type: string
                         cluster:
-                          description: An optional Valkey cluster (redis cluster under the hood)
+                          description:
+                            An optional Valkey cluster (redis cluster under the hood)
                             configuration.
                           type: object
                           properties:
@@ -1687,12 +1714,14 @@ schemas:
                                 connections.
                               type: boolean
                             useReplicas:
-                              description: When `true`, distribute load by executing readonly commands (such
+                              description:
+                                When `true`, distribute load by executing readonly commands (such
                                 as `GET`, `GEOSEARCH`, etc.) across all cluster
                                 nodes. When `false`, only use master nodes.
                               type: boolean
                             maxCommandRedirections:
-                              description: The maximum number of times a command will be redirected due to
+                              description:
+                                The maximum number of times a command will be redirected due to
                                 `MOVED` or `ASK` errors.
                               type: number
                           required:
@@ -1730,12 +1759,13 @@ schemas:
                           description: Version of client/server protocol.
                           default: "'2.9' is the latest version."
                           enum:
-                            - "2.2"
-                            - "2.5"
-                            - "2.9"
+                            - '2.2'
+                            - '2.5'
+                            - '2.9'
                           type: string
                         cacheName:
-                          description: Infinispan Cache Name if not provided default is `cache`
+                          description:
+                            Infinispan Cache Name if not provided default is `cache`
                             recommended to set this.
                           type: string
                         maxRetries:
@@ -1744,7 +1774,8 @@ schemas:
                             Defaults to 3.
                           type: number
                         topologyUpdates:
-                          description: Optional flag to controls whether the client deals with topology
+                          description:
+                            Optional flag to controls whether the client deals with topology
                             updates or not.
                           default: true
                           type: boolean
@@ -1814,7 +1845,8 @@ schemas:
                               description: Enable authentication. Defaults to `false`.
                               type: boolean
                             saslMechanism:
-                              description: Select the SASL mechanism to use. Can be one of PLAIN, DIGEST-MD5,
+                              description:
+                                Select the SASL mechanism to use. Can be one of PLAIN, DIGEST-MD5,
                                 SCRAM-SHA-1, SCRAM-SHA-256, SCRAM-SHA-384,
                                 SCRAM-SHA-512, EXTERNAL, OAUTHBEARER
                               type: string
@@ -2009,7 +2041,8 @@ schemas:
               type: object
               properties:
                 plugin:
-                  description: Plugin-specific metrics configuration. Each plugin can override
+                  description:
+                    Plugin-specific metrics configuration. Each plugin can override
                     meter metadata.
                   type: object
                   additionalProperties:
@@ -2020,7 +2053,8 @@ schemas:
                         type: object
                         properties:
                           name:
-                            description: Custom meter name. If not set, defaults to
+                            description:
+                              Custom meter name. If not set, defaults to
                               backstage-plugin-{pluginId}.
                             type: string
                           version:
@@ -2094,7 +2128,8 @@ schemas:
                       - level
                       - matchers
             rateLimit:
-              description: Rate limiting options. Defining this as `true` will enable rate
+              description:
+                Rate limiting options. Defining this as `true` will enable rate
                 limiting with default values.
               anyOf:
                 - type: object
@@ -2306,7 +2341,7 @@ schemas:
       required:
         - app
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/backend-defaults"
+    packageName: '@backstage/backend-defaults'
   - path: node_modules/@backstage/backend-plugin-api/config.d.ts
     value:
       type: object
@@ -2322,7 +2357,7 @@ schemas:
                 example as scratch space for large operations.
               type: string
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/backend-plugin-api"
+    packageName: '@backstage/backend-plugin-api'
   - path: node_modules/@backstage/plugin-app-backend/config.d.ts
     value:
       type: object
@@ -2374,7 +2409,7 @@ schemas:
                 `staticFallbackHandler` instead.
               type: boolean
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-app-backend"
+    packageName: '@backstage/plugin-app-backend'
   - path: node_modules/@backstage/plugin-auth-backend/config.d.ts
     value:
       type: object
@@ -2483,7 +2518,8 @@ schemas:
                   type: object
                   properties:
                     keys:
-                      description: Must be declared at least once and the first one will be used for
+                      description:
+                        Must be declared at least once and the first one will be used for
                         signing
                       type: array
                       items:
@@ -2593,7 +2629,7 @@ schemas:
                   items:
                     type: string
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-auth-backend"
+    packageName: '@backstage/plugin-auth-backend'
   - path: node_modules/@backstage/plugin-auth-backend-module-github-provider/config.d.ts
     value:
       type: object
@@ -2675,7 +2711,7 @@ schemas:
                       - clientId
                       - clientSecret
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-auth-backend-module-github-provider"
+    packageName: '@backstage/plugin-auth-backend-module-github-provider'
   - path: node_modules/@backstage/plugin-auth-backend-module-guest-provider/config.d.ts
     value:
       type: object
@@ -2699,18 +2735,19 @@ schemas:
                         A list of entity references to user for ownership of the
                         guest user if the user
                          is not found in the catalog.
-                      default: "[userEntityRef]"
+                      default: '[userEntityRef]'
                       type: array
                       items:
                         type: string
                     dangerouslyAllowOutsideDevelopment:
-                      description: Allow users to sign in with the guest provider outside of their
+                      description:
+                        Allow users to sign in with the guest provider outside of their
                         development environments.
                       type: boolean
           required:
             - providers
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-auth-backend-module-guest-provider"
+    packageName: '@backstage/plugin-auth-backend-module-guest-provider'
   - path: node_modules/@backstage/plugin-catalog-backend/config.d.ts
     value:
       type: object
@@ -2963,7 +3000,8 @@ schemas:
                 - keep
               type: string
             stitchingStrategy:
-              description: The strategy to use when stitching together the final entities. The
+              description:
+                The strategy to use when stitching together the final entities. The
                 default mode is "deferred".
               anyOf:
                 - type: object
@@ -2983,7 +3021,8 @@ schemas:
                     pollingInterval:
                       description: Polling interval for tasks in seconds
                     stitchTimeout:
-                      description: How long to wait for a stitch to complete before giving up in
+                      description:
+                        How long to wait for a stitch to complete before giving up in
                         seconds
                   required:
                     - mode
@@ -3031,7 +3070,8 @@ schemas:
                       defaults to false.
                     type: boolean
                   priority:
-                    description: The default priority is 20, and lower value means that the
+                    description:
+                      The default priority is 20, and lower value means that the
                       processor runs earlier.
                     type: number
             scmEvents:
@@ -3061,7 +3101,7 @@ schemas:
                       type: boolean
                 - type: boolean
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-catalog-backend"
+    packageName: '@backstage/plugin-catalog-backend'
   - path: node_modules/@backstage/plugin-kubernetes-backend/config.d.ts
     value:
       type: object
@@ -3293,7 +3333,7 @@ schemas:
             - clusterLocatorMethods
             - serviceLocatorMethod
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-kubernetes-backend"
+    packageName: '@backstage/plugin-kubernetes-backend'
   - path: node_modules/@backstage/plugin-mcp-actions-backend/config.d.ts
     value:
       type: object
@@ -3381,7 +3421,7 @@ schemas:
                 required:
                   - name
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-mcp-actions-backend"
+    packageName: '@backstage/plugin-mcp-actions-backend'
   - path: node_modules/@backstage/plugin-notifications-backend/config.d.ts
     value:
       type: object
@@ -3453,7 +3493,7 @@ schemas:
                       - id
             retention: {}
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-notifications-backend"
+    packageName: '@backstage/plugin-notifications-backend'
   - path: node_modules/@backstage/plugin-permission-common/config.d.ts
     value:
       type: object
@@ -3475,7 +3515,7 @@ schemas:
               visibility: frontend
               type: boolean
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-permission-common"
+    packageName: '@backstage/plugin-permission-common'
   - path: node_modules/@backstage/plugin-proxy-backend/config.d.ts
     value:
       type: object
@@ -3485,11 +3525,13 @@ schemas:
             - type: object
               properties:
                 skipInvalidProxies:
-                  description: Rather than failing to start up, the proxy backend will instead
+                  description:
+                    Rather than failing to start up, the proxy backend will instead
                     just warn on invalid endpoints.
                   type: boolean
                 reviveConsumedRequestBodies:
-                  description: Revive request bodies that have already been consumed by earlier
+                  description:
+                    Revive request bodies that have already been consumed by earlier
                     middleware.
                   type: boolean
                 endpoints:
@@ -3527,8 +3569,9 @@ schemas:
                                 visibility: secret
                                 type: string
                           changeOrigin:
-                            description: "Changes the origin of the host header to the target URL. Default:
-                              true."
+                            description:
+                              'Changes the origin of the host header to the target URL. Default:
+                              true.'
                             type: boolean
                           pathRewrite:
                             description: >-
@@ -3542,7 +3585,8 @@ schemas:
                             additionalProperties:
                               type: string
                           allowedMethods:
-                            description: "Limit the forwarded HTTP methods, for example allowedMethods:
+                            description:
+                              "Limit the forwarded HTTP methods, for example allowedMethods:
                               ['GET'] to enforce read-only access."
                             type: array
                             items:
@@ -3594,8 +3638,9 @@ schemas:
                             visibility: secret
                             type: string
                       changeOrigin:
-                        description: "Changes the origin of the host header to the target URL. Default:
-                          true."
+                        description:
+                          'Changes the origin of the host header to the target URL. Default:
+                          true.'
                         type: boolean
                       pathRewrite:
                         description: >-
@@ -3608,7 +3653,8 @@ schemas:
                         additionalProperties:
                           type: string
                       allowedMethods:
-                        description: "Limit the forwarded HTTP methods, for example allowedMethods:
+                        description:
+                          "Limit the forwarded HTTP methods, for example allowedMethods:
                           ['GET'] to enforce read-only access."
                         type: array
                         items:
@@ -3634,7 +3680,7 @@ schemas:
                       - target
                   - type: string
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-proxy-backend"
+    packageName: '@backstage/plugin-proxy-backend'
   - path: node_modules/@backstage/plugin-scaffolder-backend/config.d.ts
     value:
       type: object
@@ -3670,7 +3716,8 @@ schemas:
                 Set to 0 to disable task workers altogether.
               type: number
             EXPERIMENTAL_gracefulShutdown:
-              description: Tries to wait for tasks to finish during SIGTERM before shutting
+              description:
+                Tries to wait for tasks to finish during SIGTERM before shutting
                 down the TaskWorker.
               type: boolean
             EXPERIMENTAL_recoverTasks:
@@ -3680,7 +3727,8 @@ schemas:
                 If not specified, the default value is false.
               type: boolean
             EXPERIMENTAL_workspaceSerialization:
-              description: Sets the serialization of the workspace to have an ability to rerun
+              description:
+                Sets the serialization of the workspace to have an ability to rerun
                 the failed task.
               type: boolean
             EXPERIMENTAL_workspaceSerializationProvider:
@@ -3731,12 +3779,14 @@ schemas:
                 taskParameterMaxLength:
                   type: number
             defaultEnvironment:
-              description: Default environment variables and secrets available to all
+              description:
+                Default environment variables and secrets available to all
                 templates.
               type: object
               properties:
                 parameters:
-                  description: Default parameters accessible via ${{ environment.parameters.* }}
+                  description:
+                    Default parameters accessible via ${{ environment.parameters.* }}
                     in templates.
                   type: object
                   additionalProperties:
@@ -3753,7 +3803,7 @@ schemas:
                   additionalProperties:
                     type: string
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-scaffolder-backend"
+    packageName: '@backstage/plugin-scaffolder-backend'
   - path: node_modules/@backstage/plugin-search-backend/config.d.ts
     value:
       type: object
@@ -3766,11 +3816,13 @@ schemas:
               description: Sets the maximum max page limit size. Defaults to 100.
               type: number
             maxTermLength:
-              description: Sets the maximum term length for the search string. Defaults to
+              description:
+                Sets the maximum term length for the search string. Defaults to
                 100.
               type: number
             permissions:
-              description: Options related to the search integration with the Backstage
+              description:
+                Options related to the search integration with the Backstage
                 permissions system
               type: object
               properties:
@@ -3799,7 +3851,7 @@ schemas:
                   default: 1000
                   type: number
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-search-backend"
+    packageName: '@backstage/plugin-search-backend'
   - path: node_modules/@backstage/plugin-search-backend-module-catalog/config.d.ts
     value:
       type: object
@@ -3859,7 +3911,7 @@ schemas:
                     schedule:
                       description: The schedule for how often to run the collation job.
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-search-backend-module-catalog"
+    packageName: '@backstage/plugin-search-backend-module-catalog'
   - path: node_modules/@backstage/plugin-search-backend-module-pg/config.d.ts
     value:
       type: object
@@ -3879,15 +3931,18 @@ schemas:
                   type: object
                   properties:
                     useHighlight:
-                      description: Used to enable to disable the highlight feature. The default value
+                      description:
+                        Used to enable to disable the highlight feature. The default value
                         is true
                       type: boolean
                     maxWords:
-                      description: Used to set the longest headlines to output. The default value is
+                      description:
+                        Used to set the longest headlines to output. The default value is
                         35.
                       type: number
                     minWords:
-                      description: Used to set the shortest headlines to output. The default value is
+                      description:
+                        Used to set the shortest headlines to output. The default value is
                         15.
                       type: number
                     shortWord:
@@ -3900,7 +3955,8 @@ schemas:
                         articles.
                       type: number
                     highlightAll:
-                      description: If true the whole document will be used as the headline, ignoring
+                      description:
+                        If true the whole document will be used as the headline, ignoring
                         the preceding three parameters. The default is false.
                       type: boolean
                     maxFragments:
@@ -3914,11 +3970,13 @@ schemas:
                         for more details).
                       type: number
                     fragmentDelimiter:
-                      description: Delimiter string used to concatenate fragments. Defaults to " ...
+                      description:
+                        Delimiter string used to concatenate fragments. Defaults to " ...
                         ".
                       type: string
                 normalization:
-                  description: Ranking functions use an integer bit mask to control document
+                  description:
+                    Ranking functions use an integer bit mask to control document
                     length impact on rank. The default value is 0
                   type:
                     - string
@@ -3927,7 +3985,7 @@ schemas:
                   description: Batch size to use when indexing
                   type: number
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-search-backend-module-pg"
+    packageName: '@backstage/plugin-search-backend-module-pg'
   - path: node_modules/@backstage/plugin-search-backend-module-techdocs/config.d.ts
     value:
       type: object
@@ -3975,7 +4033,7 @@ schemas:
                       description: Defaults to `false`.
                       type: boolean
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-search-backend-module-techdocs"
+    packageName: '@backstage/plugin-search-backend-module-techdocs'
   - path: node_modules/@backstage/plugin-techdocs-backend/config.d.ts
     value:
       type: object
@@ -4020,7 +4078,8 @@ schemas:
                         will be broken in these scenarios.
                       type: boolean
                     defaultPlugins:
-                      description: List of mkdocs plugins which should be added as default to all
+                      description:
+                        List of mkdocs plugins which should be added as default to all
                         mkdocs.yml files.
                       type: array
                       items:
@@ -4188,7 +4247,8 @@ schemas:
                           description: (Required) Cloud Storage Container Name
                           type: string
                         authUrl:
-                          description: (Required) Auth url sometimes OpenStack uses different port check
+                          description:
+                            (Required) Auth url sometimes OpenStack uses different port check
                             your OpenStack apis.
                           type: string
                         swiftUrl:
@@ -4339,7 +4399,7 @@ schemas:
                 the old, case-sensitive entity triplet behavior.
               type: boolean
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-techdocs-backend"
+    packageName: '@backstage/plugin-techdocs-backend'
   - path: node_modules/@backstage/core-app-api/config.d.ts
     value:
       type: object
@@ -4357,7 +4417,8 @@ schemas:
               visibility: frontend
               type: string
             support:
-              description: Information about support of this Backstage instance and how to
+              description:
+                Information about support of this Backstage instance and how to
                 contact the integrator team.
               type: object
               properties:
@@ -4380,7 +4441,8 @@ schemas:
                         visibility: frontend
                         type: string
                       links:
-                        description: A list of support links for the Backstage instance inside this
+                        description:
+                          A list of support links for the Backstage instance inside this
                           grouping.
                         type: array
                         items:
@@ -4429,14 +4491,16 @@ schemas:
           type: object
           properties:
             baseUrl:
-              description: The public absolute root URL that the backend is reachable at, from
+              description:
+                The public absolute root URL that the backend is reachable at, from
                 the browser's perspective.
               visibility: frontend
               type: string
           required:
             - baseUrl
         organization:
-          description: Configuration that provides information about the organization that
+          description:
+            Configuration that provides information about the organization that
             the app is for.
           type: object
           properties:
@@ -4445,7 +4509,8 @@ schemas:
               visibility: frontend
               type: string
         homepage:
-          description: This config was used by the HomepageTimer but has been replaced  by
+          description:
+            This config was used by the HomepageTimer but has been replaced  by
             the HeaderWorldClock in the home plugin
           deprecated: in favor of the HeaderWorldClock which is found in the home plugin
           type: object
@@ -4465,7 +4530,8 @@ schemas:
                   - label
                   - timezone
         auth:
-          description: Configuration that provides information on available configured
+          description:
+            Configuration that provides information on available configured
             authentication providers.
           type: object
           properties:
@@ -4480,7 +4546,8 @@ schemas:
               visibility: frontend
               type: string
         enableExperimentalRedirectFlow:
-          description: Enable redirect authentication flow type, instead of a popup for
+          description:
+            Enable redirect authentication flow type, instead of a popup for
             authentication.
           visibility: frontend
           type: boolean
@@ -4531,7 +4598,7 @@ schemas:
         - app
         - backend
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/core-app-api"
+    packageName: '@backstage/core-app-api'
   - path: node_modules/@backstage/frontend-app-api/config.d.ts
     value:
       type: object
@@ -4652,13 +4719,14 @@ schemas:
                 required:
                   - info
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/frontend-app-api"
+    packageName: '@backstage/frontend-app-api'
   - path: node_modules/@backstage/integration/config.d.ts
     value:
       type: object
       properties:
         integrations:
-          description: Configuration for integrations towards various external repository
+          description:
+            Configuration for integrations towards various external repository
             provider systems
           visibility: frontend
           type: object
@@ -4731,7 +4799,8 @@ schemas:
                     visibility: secret
                     type: string
                   sasToken:
-                    description: A Shared Access Signature (SAS) token for limited access to
+                    description:
+                      A Shared Access Signature (SAS) token for limited access to
                       resources.
                     visibility: secret
                     type: string
@@ -4750,12 +4819,14 @@ schemas:
                       "core.usgovcloudapi.net" for US Government cloud.
                     type: string
                   endpoint:
-                    description: Optional endpoint URL for custom domain. Uses default if not
+                    description:
+                      Optional endpoint URL for custom domain. Uses default if not
                       provided.
                     visibility: frontend
                     type: string
                   aadCredential:
-                    description: Optional credential to use for Azure Active Directory
+                    description:
+                      Optional credential to use for Azure Active Directory
                       authentication.
                     type: object
                     properties:
@@ -4823,12 +4894,14 @@ schemas:
                     visibility: secret
                     type: string
                   password:
-                    description: Password (or token as password) used to authenticate requests with
+                    description:
+                      Password (or token as password) used to authenticate requests with
                       Basic Auth.
                     visibility: secret
                     type: string
                   apiBaseUrl:
-                    description: The base url for the Bitbucket Server API, for example
+                    description:
+                      The base url for the Bitbucket Server API, for example
                       https://<host>/rest/api/1.0
                     visibility: frontend
                     type: string
@@ -4902,7 +4975,8 @@ schemas:
                     visibility: frontend
                     type: string
                   rawBaseUrl:
-                    description: The base url for GitHub raw resources, for example
+                    description:
+                      The base url for GitHub raw resources, for example
                       https://raw.githubusercontent.com
                     visibility: frontend
                     type: string
@@ -4943,7 +5017,8 @@ schemas:
                           items:
                             type: string
                         publicAccess:
-                          description: If true, then an installation token will be issued for access when
+                          description:
+                            If true, then an installation token will be issued for access when
                             no other token is available.
                           type: boolean
                       required:
@@ -5015,7 +5090,8 @@ schemas:
                         items:
                           type: number
                       maxApiRequestsPerMinute:
-                        description: Maximum number of API requests allowed per minute. Set to -1 to
+                        description:
+                          Maximum number of API requests allowed per minute. Set to -1 to
                           disable rate limiting.
                         visibility: frontend
                         type: number
@@ -5116,14 +5192,15 @@ schemas:
                     visibility: secret
                     type: string
                   token:
-                    description: Harness Code token used to authenticate requests. This can be
+                    description:
+                      Harness Code token used to authenticate requests. This can be
                       either a generated access token.
                     visibility: secret
                     type: string
                 required:
                   - host
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/integration"
+    packageName: '@backstage/integration'
   - path: node_modules/@backstage/plugin-kubernetes-react/config.d.ts
     value:
       type: object
@@ -5152,7 +5229,7 @@ schemas:
                       visibility: frontend
                       type: boolean
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-kubernetes-react"
+    packageName: '@backstage/plugin-kubernetes-react'
   - path: node_modules/@backstage/backend-app-api/config.d.ts
     value:
       type: object
@@ -5275,7 +5352,7 @@ schemas:
                                 - continue
                               type: string
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/backend-app-api"
+    packageName: '@backstage/backend-app-api'
   - path: node_modules/@backstage/integration-aws-node/config.d.ts
     value:
       type: object
@@ -5295,11 +5372,13 @@ schemas:
                   description: The AWS partition of the IAM role, e.g. "aws", "aws-cn"
                   type: string
                 region:
-                  description: The STS regional endpoint to use when retrieving temporary AWS
+                  description:
+                    The STS regional endpoint to use when retrieving temporary AWS
                     credentials, e.g. "ap-northeast-1"
                   type: string
                 externalId:
-                  description: The unique identifier needed to assume the role to retrieve
+                  description:
+                    The unique identifier needed to assume the role to retrieve
                     temporary AWS credentials
                   visibility: secret
                   type: string
@@ -5323,7 +5402,8 @@ schemas:
                     a configuration file at ~/.aws/config.
                   type: string
                 region:
-                  description: The STS regional endpoint to use for the main account, e.g.
+                  description:
+                    The STS regional endpoint to use for the main account, e.g.
                     "ap-northeast-1"
                   type: string
             accounts:
@@ -5333,7 +5413,8 @@ schemas:
                 type: object
                 properties:
                   accountId:
-                    description: The account ID of the target account that this matches on, e.g.
+                    description:
+                      The account ID of the target account that this matches on, e.g.
                       "123456789012"
                     type: string
                   accessKeyId:
@@ -5358,18 +5439,20 @@ schemas:
                     description: The AWS partition of the IAM role, e.g. "aws", "aws-cn"
                     type: string
                   region:
-                    description: The STS regional endpoint to use when retrieving temporary AWS
+                    description:
+                      The STS regional endpoint to use when retrieving temporary AWS
                       credentials, e.g. "ap-northeast-1"
                     type: string
                   externalId:
-                    description: The unique identifier needed to assume the role to retrieve
+                    description:
+                      The unique identifier needed to assume the role to retrieve
                       temporary AWS credentials
                     visibility: secret
                     type: string
                 required:
                   - accountId
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/integration-aws-node"
+    packageName: '@backstage/integration-aws-node'
   - path: node_modules/@backstage/plugin-events-node/config.d.ts
     value:
       type: object
@@ -5409,7 +5492,7 @@ schemas:
                 - never
               type: string
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-events-node"
+    packageName: '@backstage/plugin-events-node'
   - path: node_modules/@backstage/plugin-catalog-backend-module-logs/node_modules/@backstage/plugin-catalog-backend/config.d.ts
     value:
       type: object
@@ -5662,7 +5745,8 @@ schemas:
                 - keep
               type: string
             stitchingStrategy:
-              description: The strategy to use when stitching together the final entities. The
+              description:
+                The strategy to use when stitching together the final entities. The
                 default mode is "deferred".
               anyOf:
                 - type: object
@@ -5682,7 +5766,8 @@ schemas:
                     pollingInterval:
                       description: Polling interval for tasks in seconds
                     stitchTimeout:
-                      description: How long to wait for a stitch to complete before giving up in
+                      description:
+                        How long to wait for a stitch to complete before giving up in
                         seconds
                   required:
                     - mode
@@ -5730,7 +5815,8 @@ schemas:
                       defaults to false.
                     type: boolean
                   priority:
-                    description: The default priority is 20, and lower value means that the
+                    description:
+                      The default priority is 20, and lower value means that the
                       processor runs earlier.
                     type: number
             scmEvents:
@@ -5760,6 +5846,5 @@ schemas:
                       type: boolean
                 - type: boolean
       $schema: http://json-schema.org/draft-07/schema#
-    packageName: "@backstage/plugin-catalog-backend"
+    packageName: '@backstage/plugin-catalog-backend'
 backstageConfigSchemaVersion: 1
-

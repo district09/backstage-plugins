@@ -4,15 +4,13 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [0.1.3](https://github.com/district09/backstage-plugins/compare/v0.1.2...v0.1.3) (2026-05-05)
 
-
 ### Features
 
-* add check result messages ([c3b6e25](https://github.com/district09/backstage-plugins/commit/c3b6e258d7e94091e8154e3f33313d1d639622f4))
-
+- add check result messages ([c3b6e25](https://github.com/district09/backstage-plugins/commit/c3b6e258d7e94091e8154e3f33313d1d639622f4))
 
 ### Bug Fixes
 
-* formatting ([4c23421](https://github.com/district09/backstage-plugins/commit/4c23421468d697345f0d095d7fed95ed4df0ebbc))
+- formatting ([4c23421](https://github.com/district09/backstage-plugins/commit/4c23421468d697345f0d095d7fed95ed4df0ebbc))
 
 ### [0.1.2](https://github.com/district09/backstage-plugins/compare/v0.1.1...v0.1.2) (2026-05-05)
 
