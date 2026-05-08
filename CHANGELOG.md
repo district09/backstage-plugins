@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/district09/backstage-plugins/compare/v0.1.3...v0.1.4) (2026-05-08)
+
+
+### Features
+
+* Feature/add included runners ([#3](https://github.com/district09/backstage-plugins/issues/3)) ([cd9aea7](https://github.com/district09/backstage-plugins/commit/cd9aea73c91ce240d7637003f9170555ccdcffb8))
+
+
+### Bug Fixes
+
+* prettier config ([c0c8dc6](https://github.com/district09/backstage-plugins/commit/c0c8dc691bd547aac3521fe831be40ca5cc50ec6))
+
 ### [0.1.3](https://github.com/district09/backstage-plugins/compare/v0.1.2...v0.1.3) (2026-05-05)
 
 ### Features
