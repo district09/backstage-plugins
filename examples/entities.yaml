@@ -12,12 +12,64 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: example-website
+  description: The main example website for demonstrating Backstage features.
+  tags:
+    - website
+    - frontend
 spec:
   type: website
-  lifecycle: experimental
+  lifecycle: production
   owner: guests
   system: examples
   providesApis: [example-grpc-api]
+---
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-component
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: d09-example-backend
+  title: Example Backend Service
+  description: A backend service powering the example website.
+  tags:
+    - hello
+spec:
+  type: service
+  lifecycle: production
+  owner: guests
+  system: examples
+  consumesApis: [example-grpc-api]
+---
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-component
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: example-data-pipeline
+  title: Example Data Pipeline
+  description: A batch processing pipeline that ingests and transforms data.
+  tags:
+    - data
+    - pipeline
+spec:
+  type: service
+  lifecycle: experimental
+  owner: guests
+  system: examples
+---
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-component
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: example-mobile-app
+  title: Example Mobile App
+  description: A cross-platform mobile application built with React Native.
+  tags:
+    - mobile
+    - frontend
+spec:
+  type: website
+  lifecycle: deprecated
+  owner: guests
+  system: examples
 ---
 # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-api
 apiVersion: backstage.io/v1alpha1
@@ -39,3 +91,31 @@ spec:
     message ExampleMessage {
       string example = 1;
     };
+---
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-api
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: example-rest-api
+  title: Example REST API
+  description: A RESTful API for managing example resources.
+  tags:
+    - rest
+    - openapi
+spec:
+  type: openapi
+  lifecycle: production
+  owner: guests
+  system: examples
+  definition: |
+    openapi: "3.0.0"
+    info:
+      title: Example REST API
+      version: "1.0.0"
+    paths:
+      /examples:
+        get:
+          summary: List examples
+          responses:
+            '200':
+              description: A list of examples

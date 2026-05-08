@@ -3,7 +3,7 @@ import { MigrationEntityV1 } from '@district09/backstage-plugin-migrations-commo
 import { alertApiRef, useApi } from '@backstage/frontend-plugin-api';
 import { migrationsApiRef } from '../api';
 import { IconLinkVerticalProps } from '@backstage/core-components';
-import BuildIcon from '@material-ui/icons/Build';
+import { RiWrenchLine } from '@remixicon/react';
 
 export const useMigrationEntityIconLinkProps = (): Omit<
   IconLinkVerticalProps,
@@ -25,7 +25,7 @@ export const useMigrationEntityIconLinkProps = (): Omit<
 
   return {
     title: 'Refresh Migration',
-    icon: <BuildIcon />,
+    icon: <RiWrenchLine />,
     label: 'Refresh migration',
     onClick: refreshFunc,
   };

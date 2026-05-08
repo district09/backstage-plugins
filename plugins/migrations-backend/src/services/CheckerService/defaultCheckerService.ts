@@ -41,9 +41,16 @@ export class DefaultCheckerService implements CheckerService {
   }
 
   async runMigrationChecks(migration: MigrationEntityV1): Promise<void> {
-    const checksToRun = migration.spec.checks
-      .map(e => this.checkerStore.getChecker(e.checkId))
-      .filter(check => check !== undefined);
+    const checksToRun = [
+      ...new Map(
+        migration.spec.checks
+          .map(e => this.checkerStore.getChecker(e.checkId))
+          .filter(
+            (check): check is NonNullable<typeof check> => check !== undefined,
+          )
+          .map(c => [c.id, c] as const),
+      ).values(),
+    ];
 
     if (checksToRun.length <= 0) {
       this.logger.warn(

@@ -9,25 +9,22 @@ import {
 import {
   StatusError,
   StatusOK,
+  StatusWarning,
   Table,
   TableColumn,
 } from '@backstage/core-components';
 import { parseEntityRef } from '@backstage/catalog-model';
+import startCase from 'lodash/startCase';
 import {
   Box,
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
+  Text,
+  ToggleButton,
+  ToggleButtonGroup,
   Tooltip,
-  Typography,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+  TooltipTrigger,
+} from '@backstage/ui';
 import { useAsync } from 'react-use';
+import styles from './MigrationEntityResultsTable.module.css';
 
 type RowData = {
   id: string;
@@ -54,86 +51,92 @@ const createColumns = (
         return <>{entityRef.kind}</>;
       },
     },
-    ...checks.map(c => ({
-      title: c.id,
-      field: c.id,
-      render: (item: RowData) => {
-        const result = item.results.find(r => r.checkId === c.id);
-        const icon =
-          result === undefined || !result.result ? (
-            <StatusError />
-          ) : (
-            <StatusOK />
-          );
-        if (result?.message) {
-          return <Tooltip title={result.message}>{icon}</Tooltip>;
-        }
-        return icon;
-      },
-    })),
+    ...checks.map(c => {
+      const column: TableColumn<RowData> = {
+        title: c.id,
+        field: c.id,
+        render: (item: RowData) => {
+          const results = item.results.filter(r => r.checkId === c.id);
+          const passCount = results.filter(r => r.result).length;
+          const isPartial = passCount > 0 && passCount < results.length;
+          const allPassed = results.length > 0 && passCount === results.length;
+
+          let icon;
+          if (allPassed) {
+            icon = <StatusOK />;
+          } else {
+            icon = isPartial ? <StatusWarning /> : <StatusError />;
+          }
+
+          const messages = results
+            .filter(r => r.message)
+            .map(r => r.message)
+            .join('\n');
+          if (messages) {
+            return (
+              <TooltipTrigger>
+                {icon}
+                <Tooltip>{messages}</Tooltip>
+              </TooltipTrigger>
+            );
+          }
+          return icon;
+        },
+        customSort: (a, b) => {
+          const score = (row: RowData) => {
+            const results = row.results.filter(r => r.checkId === c.id);
+            if (results.length === 0) return 3; // no results — sort last
+            const passCount = results.filter(r => r.result).length;
+            if (passCount === results.length) return 0; // all passed
+            if (passCount > 0) return 1; // partial
+            return 2; // all failed
+          };
+          return score(a) - score(b);
+        },
+      };
+      return column;
+    }),
   ];
 };
 
-const useDetailPanelStyles = makeStyles(theme => ({
-  root: {
-    padding: theme.spacing(2, 4),
-    borderTop: `1px solid ${theme.palette.divider}`,
-    backgroundColor: theme.palette.background.default,
+const checkResultColumns: TableColumn<ComponentMigrationResult>[] = [
+  {
+    title: 'Check',
+    field: 'checkId',
+    render: row => <Text>{startCase(row.checkId)}</Text>,
   },
-  header: {
-    marginBottom: theme.spacing(1),
-    color: theme.palette.text.secondary,
-    textTransform: 'uppercase',
-    letterSpacing: '0.08em',
+  {
+    title: 'Result',
+    field: 'result',
+    render: row => (row.result ? <StatusOK /> : <StatusError />),
+    type: 'boolean',
   },
-  checkId: {
-    fontWeight: 'lighter',
-  },
-  icon: {
-    color: theme.palette.error.main,
-    minWidth: 32,
-  },
-}));
+  { title: 'Description', field: 'description' },
+  { title: 'Message', field: 'message' },
+  { title: 'Checked At', field: 'checked_at' },
+];
 
-const FailedChecksPanel = ({
+const CheckResultsPanel = ({
   results,
 }: {
   results: Array<ComponentMigrationResult>;
-}) => {
-  const classes = useDetailPanelStyles();
-  const failed = results.filter(r => !r.result && r.message);
+}) => (
+  <div className={styles.detailPanel}>
+    <Table
+      title=""
+      columns={checkResultColumns}
+      data={results}
+      options={{
+        paging: false,
+        search: false,
+        toolbar: false,
+        padding: 'dense',
+      }}
+    />
+  </div>
+);
 
-  if (failed.length === 0) return null;
-
-  return (
-    <Box className={classes.root}>
-      <Typography variant="caption" className={classes.header}>
-        Failed checks
-      </Typography>
-      <List dense disablePadding>
-        {failed.map((r, i) => (
-          <Box key={r.checkId}>
-            {i > 0 && <Divider component="li" />}
-            <ListItem disableGutters>
-              <ListItemIcon className={classes.icon}>
-                <ErrorOutlineIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  <Typography variant="body2" className={classes.checkId}>
-                    {r.checkId}
-                  </Typography>
-                }
-                secondary={r.message}
-              />
-            </ListItem>
-          </Box>
-        ))}
-      </List>
-    </Box>
-  );
-};
-
+/** Shown on the migration entity page — lists all components checked in this migration. */
 export const MigrationEntityResultsTable = () => {
   const migrationsApi = useApi(migrationsApiRef);
   const { entity } = useEntity<MigrationEntityV1>();
@@ -150,31 +153,31 @@ export const MigrationEntityResultsTable = () => {
   const columns = createColumns(value?.checks ?? []);
 
   return (
-    <Box p={2}>
-      <Box mb={2}>
+    <Box style={{ padding: 'var(--bui-space-4)' }}>
+      <Box style={{ marginBottom: 'var(--bui-space-4)' }}>
         <ToggleButtonGroup
-          exclusive
-          value={selected}
-          onChange={(_e, val) => {
-            if (val !== null) setSelected(val);
+          selectionMode="single"
+          selectedKeys={new Set([selected])}
+          onSelectionChange={keys => {
+            const val = [...keys][0];
+            if (val) setSelected(val as string);
           }}
-          size="small"
         >
-          <ToggleButton value="owned">Owned</ToggleButton>
-          <ToggleButton value="all">All</ToggleButton>
+          <ToggleButton id="owned">Owned</ToggleButton>
+          <ToggleButton id="all">All</ToggleButton>
         </ToggleButtonGroup>
       </Box>
       <Table
-        title="Migration Results"
+        title="Components"
         columns={columns}
         data={value?.components ?? []}
         isLoading={loading}
         options={{ paging: true, pageSize: 10, search: true }}
         detailPanel={[
           {
-            tooltip: 'Show failed check messages',
+            tooltip: 'Show check details',
             render: ({ rowData }: { rowData: RowData }) => (
-              <FailedChecksPanel results={rowData.results} />
+              <CheckResultsPanel results={rowData.results} />
             ),
           },
         ]}

@@ -49,6 +49,7 @@
     "@backstage/plugin-techdocs-backend": "backstage:^",
     "@district09/backstage-plugin-catalog-backend-module-migrations": "workspace:^",
     "@district09/backstage-plugin-migrations-backend": "workspace:^",
+    "@district09/backstage-plugin-migrations-backend-module-built-in-checks": "workspace:^",
     "@district09/backstage-plugin-migrations-common": "workspace:^",
     "@district09/backstage-plugin-migrations-node": "workspace:^",
     "app": "link:../app",

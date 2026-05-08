@@ -1,5 +1,5 @@
 import { MigrationsApi } from './types.ts';
-import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
+import { DiscoveryApi, FetchApi } from '@backstage/frontend-plugin-api';
 import {
   CompoundEntityRef,
   getCompoundEntityRef,

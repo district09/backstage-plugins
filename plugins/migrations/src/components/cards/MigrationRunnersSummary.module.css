@@ -1,0 +1,6 @@
+@layer components {
+  .card {
+    height: calc(100% - 10px);
+    width: 400px;
+  }
+}

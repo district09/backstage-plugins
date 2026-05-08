@@ -29,6 +29,10 @@ export interface MigrationCheckResult {
   message?: string;
 }
 
+export type MigrationCheckResultEmitter = (
+  result: MigrationCheckResult & { checkId: string; description?: string },
+) => void;
+
 export interface MigrationChecker {
   id: string;
   description: string;
@@ -72,15 +76,17 @@ export abstract class BaseMigrationChecker implements MigrationChecker {
       } entities related to migration ${stringifyEntityRef(migration)}`,
     );
     for (const e of entities) {
-      const result = await this.runCheck(e, migration);
-      allResults.push({
-        checkId: this.id,
-        description: this.description,
-        migrationReference: stringifyEntityRef(migration),
-        componentReference: stringifyEntityRef(e),
-        result: result.result,
-        message: result.message,
-      });
+      const emit: MigrationCheckResultEmitter = result => {
+        allResults.push({
+          checkId: result.checkId,
+          description: result.description,
+          migrationReference: stringifyEntityRef(migration),
+          componentReference: stringifyEntityRef(e),
+          result: result.result,
+          message: result.message,
+        });
+      };
+      await this.runCheck(e, migration, emit);
     }
     return allResults;
   }
@@ -88,7 +94,8 @@ export abstract class BaseMigrationChecker implements MigrationChecker {
   abstract runCheck(
     entity: Entity,
     migration: MigrationEntityV1,
-  ): Promise<MigrationCheckResult>;
+    emit: MigrationCheckResultEmitter,
+  ): Promise<void>;
 
   private async getRelatedEntities(
     migration: MigrationEntityV1,

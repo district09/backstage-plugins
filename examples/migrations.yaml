@@ -18,3 +18,15 @@ spec:
     kind: Component
   checks:
     - checkId: 'entity-metadata-checker'
+    - checkId: 'catalog-info'
+      config:
+        id: contains-d09
+        path: metadata.name
+        op: contains
+        value: d09
+    - checkId: 'catalog-info'
+      config:
+        id: lifecycle-production
+        path: spec.lifecycle
+        op: equals
+        value: production

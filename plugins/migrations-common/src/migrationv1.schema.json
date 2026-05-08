@@ -42,7 +42,8 @@
                 "properties": {
                   "checkId": {
                     "type": "string"
-                  }
+                  },
+                  "config": {}
                 }
               },
               "default": []

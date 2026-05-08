@@ -2,7 +2,7 @@ import { Entity } from '@backstage/catalog-model';
 import {
   BaseMigrationChecker,
   MigrationChecker,
-  MigrationCheckResult,
+  MigrationCheckResultEmitter,
 } from '@district09/backstage-plugin-migrations-node';
 import { MigrationEntityV1 } from '@district09/backstage-plugin-migrations-common';
 import { catalogServiceRef } from '@backstage/plugin-catalog-node';
@@ -52,7 +52,8 @@ export class EntityMetadataChecker
   async runCheck(
     entity: Entity,
     _migration: MigrationEntityV1,
-  ): Promise<MigrationCheckResult> {
+    emit: MigrationCheckResultEmitter,
+  ): Promise<void> {
     const hasTitle =
       entity.metadata.title !== undefined && entity.metadata.title.length > 0;
     const hasDescription =
@@ -61,9 +62,11 @@ export class EntityMetadataChecker
     const hasTags =
       entity.metadata.tags !== undefined && entity.metadata.tags.length > 0;
 
-    return {
+    emit({
+      checkId: this.id,
+      description: this.description,
       result: hasTitle && hasDescription && hasTags,
       message: buildMessage(hasTitle, hasDescription, hasTags),
-    };
+    });
   }
 }

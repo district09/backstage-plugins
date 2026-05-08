@@ -1,16 +1,11 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Grid,
-  makeStyles,
-} from '@material-ui/core';
+import { Box, Card, Grid, Text } from '@backstage/ui';
 import { useEntity } from '@backstage/plugin-catalog-react';
 import { MigrationEntityV1 } from '@district09/backstage-plugin-migrations-common';
 import { useApi } from '@backstage/frontend-plugin-api';
 import { migrationsApiRef } from '../../api';
 import { useAsync } from 'react-use';
 import { LinearGauge } from '@backstage/core-components';
+import styles from './MigrationRunnersSummary.module.css';
 
 interface RunnerResult {
   id: string;
@@ -19,18 +14,9 @@ interface RunnerResult {
   total_count: number;
 }
 
-const useStyles = makeStyles(_ => ({
-  card: {
-    height: 'calc(100% - 10px)',
-    width: '400px',
-    // flex: 1,
-  },
-}));
-
 export const MigrationRunnersSummary = () => {
   const migrationsApi = useApi(migrationsApiRef);
   const { entity } = useEntity<MigrationEntityV1>();
-  const { card } = useStyles();
 
   const { value, loading, error } = useAsync(async () => {
     const r = await migrationsApi.getMigrationResults(entity, {
@@ -60,20 +46,24 @@ export const MigrationRunnersSummary = () => {
   if (loading || !value || error) return null;
 
   return (
-    <Card className={card}>
-      <CardHeader title="Runners" />
-      <CardContent>
+    <Card className={styles.card}>
+      <Box style={{ padding: 'var(--bui-space-3)' }}>
+        <Text
+          as="p"
+          variant="title-small"
+          style={{ marginBottom: 'var(--bui-space-3)' }}
+        >
+          Runners
+        </Text>
         {value.results.map((result, index) => (
-          <Grid container spacing={2} key={index}>
-            <Grid item xs={6}>
-              {result.id}
-            </Grid>
-            <Grid item xs={6}>
+          <Grid.Root columns={{ sm: '12' }} gap="4" key={index}>
+            <Grid.Item colSpan={{ sm: '6' }}>{result.id}</Grid.Item>
+            <Grid.Item colSpan={{ sm: '6' }}>
               <LinearGauge value={result.passed_count / result.total_count} />
-            </Grid>
-          </Grid>
+            </Grid.Item>
+          </Grid.Root>
         ))}
-      </CardContent>
+      </Box>
     </Card>
   );
 };

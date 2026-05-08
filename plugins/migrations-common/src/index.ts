@@ -65,6 +65,7 @@ export interface MigrationCheckV1 extends JsonObject {
    * Unique identifier of the check.
    */
   checkId: string;
+  config?: JsonObject;
 }
 
 const validator = entityKindSchemaValidator(migrationSchema);

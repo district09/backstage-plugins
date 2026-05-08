@@ -19,7 +19,7 @@ The easiest way to implement a checker is to extend `BaseMigrationChecker`:
 ```ts
 import {
   BaseMigrationChecker,
-  MigrationCheckResult,
+  MigrationCheckResultEmitter,
 } from '@district09/backstage-plugin-migrations-node';
 import { MigrationEntityV1 } from '@district09/backstage-plugin-migrations-common';
 import { Entity } from '@backstage/catalog-model';
@@ -31,10 +31,13 @@ export class Python3Checker extends BaseMigrationChecker {
   async runCheck(
     entity: Entity,
     _migration: MigrationEntityV1,
-  ): Promise<MigrationCheckResult> {
+    emit: MigrationCheckResultEmitter,
+  ): Promise<void> {
     const isPython3 =
       entity.metadata.annotations?.['example.com/python-version'] === '3';
-    return {
+    emit({
+      checkId: this.id,
+      description: this.description,
       result: isPython3,
       message: isPython3
         ? undefined
@@ -42,7 +45,7 @@ export class Python3Checker extends BaseMigrationChecker {
             entity.metadata.annotations?.['example.com/python-version'] ??
             'unknown'
           } — upgrade to Python 3 is required.`,
-    };
+    });
   }
 }
 ```
@@ -120,11 +123,11 @@ backend.add(import('./modules/migrationsModulePython3Checker'));
 
 Abstract base class. Subclasses must implement:
 
-| Member                        | Type                            | Description                                                                                   |
-| ----------------------------- | ------------------------------- | --------------------------------------------------------------------------------------------- |
-| `id`                          | `string`                        | Unique identifier matching the `checkId` in Migration specs                                   |
-| `description`                 | `string`                        | Human-readable description of the check                                                       |
-| `runCheck(entity, migration)` | `Promise<MigrationCheckResult>` | Runs the check for a single entity. Return `message` to explain why a check passed or failed. |
+| Member                              | Type            | Description                                                                                                               |
+| ----------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `id`                                | `string`        | Unique identifier matching the `checkId` in Migration specs                                                               |
+| `description`                       | `string`        | Human-readable description of the check                                                                                   |
+| `runCheck(entity, migration, emit)` | `Promise<void>` | Runs the check for a single entity. Call `emit(result)` for each result — a checker may emit multiple results per entity. |
 
 ### `migrationCheckRunnerExtensionPoint`
 
