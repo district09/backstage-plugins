@@ -4,7 +4,8 @@
     "plugins/migrations/package.json",
     "plugins/migrations-backend/package.json",
     "plugins/migrations-node/package.json",
-    "plugins/migrations-common/package.json"
+    "plugins/migrations-common/package.json",
+    "plugins/migrations-backend-module-built-in-checks/package.json"
   ],
   "bumpFiles": [
     {
@@ -25,6 +26,10 @@
     },
     {
       "filename": "plugins/migrations-common/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "plugins/migrations-backend-module-built-in-checks/package.json",
       "type": "json"
     }
   ]

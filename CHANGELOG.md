@@ -4,16 +4,14 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [0.1.5](https://github.com/district09/backstage-plugins/compare/v0.1.4...v0.1.5) (2026-05-21)
 
-
 ### Features
 
-* add event based entity refresh for migration checks ([4c93f2f](https://github.com/district09/backstage-plugins/commit/4c93f2fabd5fdcbad15bedfa99036dfab0509314))
-
+- add event based entity refresh for migration checks ([4c93f2f](https://github.com/district09/backstage-plugins/commit/4c93f2fabd5fdcbad15bedfa99036dfab0509314))
 
 ### Bug Fixes
 
-* prettier ([7878a7d](https://github.com/district09/backstage-plugins/commit/7878a7d2ea34a0c307357109f5e95d633cf86682))
-* update lockfile ([10071e2](https://github.com/district09/backstage-plugins/commit/10071e24acd95e3841b4ca2c2113dae9baf7409a))
+- prettier ([7878a7d](https://github.com/district09/backstage-plugins/commit/7878a7d2ea34a0c307357109f5e95d633cf86682))
+- update lockfile ([10071e2](https://github.com/district09/backstage-plugins/commit/10071e24acd95e3841b4ca2c2113dae9baf7409a))
 
 ### [0.1.4](https://github.com/district09/backstage-plugins/compare/v0.1.3...v0.1.4) (2026-05-08)
 
