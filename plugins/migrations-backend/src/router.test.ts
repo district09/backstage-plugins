@@ -19,12 +19,14 @@ describe('createRouter', () => {
 
   const mockCheckScheduler: jest.Mocked<CheckSchedulerService> = {
     dispatchImmediateCheck: jest.fn(),
+    dispatchImmediateEntityCheck: jest.fn(),
   };
 
   const mockDb: jest.Mocked<MigrationDatabase> = {
     storeMigrationCheck: jest.fn(),
     retrieveResultsFor: jest.fn(),
     retrieveResultsForComponent: jest.fn(),
+    storeEntityCheckResults: jest.fn(),
   };
 
   const mockCatalog = {
@@ -80,6 +82,44 @@ describe('createRouter', () => {
 
       const res = await request(app).post(
         '/refresh/default/Component/my-service',
+      );
+
+      expect(res.status).toBe(500);
+      expect(res.body).toEqual({
+        success: false,
+        message: 'Scheduler unavailable',
+      });
+    });
+  });
+
+  describe('POST /refresh/component/:namespace/:kind/:name', () => {
+    it('returns 202 on successful dispatch', async () => {
+      mockCheckScheduler.dispatchImmediateEntityCheck.mockResolvedValue(
+        undefined,
+      );
+
+      const res = await request(app).post(
+        '/refresh/component/default/Component/my-service',
+      );
+
+      expect(res.status).toBe(202);
+      expect(res.body).toEqual({ success: true });
+      expect(
+        mockCheckScheduler.dispatchImmediateEntityCheck,
+      ).toHaveBeenCalledWith({
+        name: 'my-service',
+        kind: 'Component',
+        namespace: 'default',
+      });
+    });
+
+    it('returns 500 when dispatchImmediateEntityCheck throws', async () => {
+      mockCheckScheduler.dispatchImmediateEntityCheck.mockRejectedValue(
+        new Error('Scheduler unavailable'),
+      );
+
+      const res = await request(app).post(
+        '/refresh/component/default/Component/my-service',
       );
 
       expect(res.status).toBe(500);

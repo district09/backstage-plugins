@@ -22,6 +22,7 @@ const checkSchedulerMockFactory = createServiceFactory({
   async factory() {
     return {
       dispatchImmediateCheck: jest.fn().mockResolvedValue(undefined),
+      dispatchImmediateEntityCheck: jest.fn().mockResolvedValue(undefined),
     };
   },
 });
@@ -32,6 +33,7 @@ const migrationDatabaseMockFactory = createServiceFactory({
   async factory() {
     return {
       storeMigrationCheck: jest.fn().mockResolvedValue(undefined),
+      storeEntityCheckResults: jest.fn().mockResolvedValue(undefined),
       retrieveResultsFor: jest.fn().mockResolvedValue([]),
       retrieveResultsForComponent: jest.fn().mockResolvedValue([]),
     };
@@ -81,6 +83,7 @@ describe('plugin', () => {
         id: 'my-checker',
         description: 'A test checker',
         runCheckForAllRelatedEntities: jest.fn(),
+        runCheckForSingleEntity: jest.fn(),
       };
 
       const checkerModule = createBackendModule({
@@ -109,6 +112,7 @@ describe('plugin', () => {
         id,
         description: `Checker ${id}`,
         runCheckForAllRelatedEntities: jest.fn(),
+        runCheckForSingleEntity: jest.fn(),
       });
 
       const multiCheckerModule = createBackendModule({
@@ -145,6 +149,7 @@ describe('plugin', () => {
                 id: 'duplicate-checker',
                 description: 'First registration',
                 runCheckForAllRelatedEntities: jest.fn(),
+                runCheckForSingleEntity: jest.fn(),
               };
               ep.addChecker(checker);
               // Second call with the same ID must throw
@@ -176,6 +181,7 @@ describe('plugin', () => {
                   id: checkerId,
                   description: `Checker from ${moduleId}`,
                   runCheckForAllRelatedEntities: jest.fn(),
+                  runCheckForSingleEntity: jest.fn(),
                 });
               },
             });

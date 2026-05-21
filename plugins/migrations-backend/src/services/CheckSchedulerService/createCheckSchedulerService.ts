@@ -192,5 +192,31 @@ export async function createCheckSchedulerService({
       await addIfNeeded(taskId, input);
       await scheduler.triggerTask(taskId);
     },
+    async dispatchImmediateEntityCheck(
+      entityRef: CompoundEntityRef,
+    ): Promise<void> {
+      logger.info(
+        `dispatching immediate entity check for ${stringifyEntityRef(
+          entityRef,
+        )}`,
+      );
+      const entityRefStr = stringifyEntityRef(entityRef);
+      const taskId = `migrations.entityCheck.${entityRefStr}`;
+      if (
+        (await scheduler.getScheduledTasks()).findIndex(e => e.id === taskId) <
+        0
+      ) {
+        await scheduler.scheduleTask({
+          id: taskId,
+          scope: 'global',
+          frequency: { trigger: 'manual' },
+          timeout: defaultSchedule.timeout,
+          fn: async () => {
+            await checkerService.runMigrationChecksForEntity(entityRef);
+          },
+        });
+      }
+      await scheduler.triggerTask(taskId);
+    },
   };
 }

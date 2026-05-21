@@ -7,6 +7,12 @@ export interface MigrationDatabase {
     results: Array<CheckResultsDbEntity>;
   }): Promise<void>;
 
+  storeEntityCheckResults(input: {
+    migrationReference: CompoundEntityRef;
+    componentReference: CompoundEntityRef;
+    results: Array<CheckResultsDbEntity>;
+  }): Promise<void>;
+
   retrieveResultsFor({
     migrationReference,
   }: {

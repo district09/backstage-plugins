@@ -37,6 +37,7 @@
     "@backstage/catalog-model": "backstage:^",
     "@backstage/errors": "backstage:^",
     "@backstage/plugin-catalog-node": "backstage:^",
+    "@backstage/plugin-events-node": "backstage:^",
     "@district09/backstage-plugin-migrations-common": "workspace:^",
     "@district09/backstage-plugin-migrations-node": "workspace:^",
     "express": "^4.17.1",

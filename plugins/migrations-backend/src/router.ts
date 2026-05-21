@@ -54,6 +54,26 @@ export async function createRouter({
     }
   });
 
+  router.post('/refresh/component/:namespace/:kind/:name', async (req, res) => {
+    const { namespace, kind, name } = req.params;
+    logger.info(
+      `Refreshing migration checks for component ${kind}:${namespace}/${name}`,
+    );
+    if (!namespace || !kind || !name) {
+      throw new InputError('Invalid entity reference provided');
+    }
+    try {
+      await checkSchedulerService.dispatchImmediateEntityCheck({
+        name,
+        kind,
+        namespace,
+      });
+      res.status(202).json({ success: true });
+    } catch (e) {
+      res.status(500).json({ success: false, message: (e as Error).message });
+    }
+  });
+
   // get results for a migration
   router.get('/results/migration/:namespace/:kind/:name', async (req, res) => {
     logger.info(`Fetching results for ${req.params.kind} ${req.params.name}`);

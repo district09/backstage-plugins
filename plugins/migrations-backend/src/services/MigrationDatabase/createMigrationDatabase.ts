@@ -70,5 +70,27 @@ export async function createMigrationDatabase({
         );
       });
     },
+    async storeEntityCheckResults(input: {
+      migrationReference: CompoundEntityRef;
+      componentReference: CompoundEntityRef;
+      results: Array<CheckResultsDbEntity>;
+    }): Promise<void> {
+      const migrationRefStr = stringifyEntityRef(input.migrationReference);
+      const componentRefStr = stringifyEntityRef(input.componentReference);
+      await client.transaction(async tx => {
+        await tx
+          .table('migration_check_results')
+          .where('migrationReference', migrationRefStr)
+          .where('componentReference', componentRefStr)
+          .del();
+        if (input.results.length > 0) {
+          await tx.batchInsert<CheckResultsDbEntity>(
+            'migration_check_results',
+            input.results,
+            50,
+          );
+        }
+      });
+    },
   };
 }

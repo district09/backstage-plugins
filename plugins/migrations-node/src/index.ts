@@ -41,7 +41,10 @@ export interface MigrationChecker {
     migration: MigrationEntityV1,
   ): Promise<CheckResultsDbEntity[]>;
 
-  // TODO: runEntityChecks(entity: CompoundEntityRef): Promise<void>;
+  runCheckForSingleEntity(
+    entity: Entity,
+    migration: MigrationEntityV1,
+  ): Promise<CheckResultsDbEntity[]>;
 }
 
 export abstract class BaseMigrationChecker implements MigrationChecker {
@@ -89,6 +92,30 @@ export abstract class BaseMigrationChecker implements MigrationChecker {
       await this.runCheck(e, migration, emit);
     }
     return allResults;
+  }
+
+  async runCheckForSingleEntity(
+    entity: Entity,
+    migration: MigrationEntityV1,
+  ): Promise<CheckResultsDbEntity[]> {
+    const results: CheckResultsDbEntity[] = [];
+    this.logger.info(
+      `Running check '${this.id}' on entity ${stringifyEntityRef(
+        entity,
+      )} for migration ${stringifyEntityRef(migration)}`,
+    );
+    const emit: MigrationCheckResultEmitter = result => {
+      results.push({
+        checkId: result.checkId,
+        description: result.description,
+        migrationReference: stringifyEntityRef(migration),
+        componentReference: stringifyEntityRef(entity),
+        result: result.result,
+        message: result.message,
+      });
+    };
+    await this.runCheck(entity, migration, emit);
+    return results;
   }
 
   abstract runCheck(

@@ -12,6 +12,8 @@ import {
   MigrationChecker,
   migrationCheckRunnerExtensionPoint,
 } from '@district09/backstage-plugin-migrations-node';
+import { eventsServiceRef } from '@backstage/plugin-events-node';
+import { entityRefreshServiceRef } from './services/EntityRefreshService';
 
 /**
  * MigrationsPlugin backend plugin
@@ -45,6 +47,8 @@ export const migrationsPlugin = createBackendPlugin({
         catalog: catalogServiceRef,
         userInfo: coreServices.userInfo,
         auth: coreServices.auth,
+        events: eventsServiceRef,
+        entityRefreshService: entityRefreshServiceRef,
       },
       async init({
         httpRouter,
@@ -57,6 +61,8 @@ export const migrationsPlugin = createBackendPlugin({
         userInfo,
         auth,
         httpAuth,
+        events,
+        entityRefreshService,
       }) {
         const client = await bDatabase.getClient();
         const migrationPath = resolvePackagePath(
@@ -69,6 +75,23 @@ export const migrationsPlugin = createBackendPlugin({
           });
         }
         checkers.forEach(c => checkerStore.addChecker(c));
+
+        await events.subscribe({
+          id: 'migrations-backend-plugin',
+          topics: ['github.push', 'github.repository'],
+          onEvent: async event => {
+            if (
+              event.topic === 'github.push' ||
+              event.topic === 'github.repository'
+            ) {
+              const payload = event.eventPayload as any;
+              const name = payload?.repository?.full_name;
+              if (!name) return;
+              await entityRefreshService.refreshEntity(name as string);
+            }
+          },
+        });
+
         httpRouter.use(
           await createRouter({
             checkSchedulerService: checkScheduler,
