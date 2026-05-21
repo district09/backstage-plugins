@@ -14,10 +14,8 @@ import {
   TableColumn,
 } from '@backstage/core-components';
 import { parseEntityRef } from '@backstage/catalog-model';
-import startCase from 'lodash/startCase';
 import {
   Box,
-  Text,
   ToggleButton,
   ToggleButtonGroup,
   Tooltip,
@@ -25,6 +23,7 @@ import {
 } from '@backstage/ui';
 import { useAsync } from 'react-use';
 import styles from './MigrationEntityResultsTable.module.css';
+import { CheckResultsPanel } from '../CheckResultsPanel';
 
 type RowData = {
   id: string;
@@ -99,43 +98,6 @@ const createColumns = (
   ];
 };
 
-const checkResultColumns: TableColumn<ComponentMigrationResult>[] = [
-  {
-    title: 'Check',
-    field: 'checkId',
-    render: row => <Text>{startCase(row.checkId)}</Text>,
-  },
-  {
-    title: 'Result',
-    field: 'result',
-    render: row => (row.result ? <StatusOK /> : <StatusError />),
-    type: 'boolean',
-  },
-  { title: 'Description', field: 'description' },
-  { title: 'Message', field: 'message' },
-  { title: 'Checked At', field: 'checked_at' },
-];
-
-const CheckResultsPanel = ({
-  results,
-}: {
-  results: Array<ComponentMigrationResult>;
-}) => (
-  <div className={styles.detailPanel}>
-    <Table
-      title=""
-      columns={checkResultColumns}
-      data={results}
-      options={{
-        paging: false,
-        search: false,
-        toolbar: false,
-        padding: 'dense',
-      }}
-    />
-  </div>
-);
-
 /** Shown on the migration entity page — lists all components checked in this migration. */
 export const MigrationEntityResultsTable = () => {
   const migrationsApi = useApi(migrationsApiRef);
@@ -177,7 +139,9 @@ export const MigrationEntityResultsTable = () => {
           {
             tooltip: 'Show check details',
             render: ({ rowData }: { rowData: RowData }) => (
-              <CheckResultsPanel results={rowData.results} />
+              <div className={styles.detailPanel}>
+                <CheckResultsPanel results={rowData.results} />
+              </div>
             ),
           },
         ]}

@@ -4,10 +4,9 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.1.7](https://github.com/district09/backstage-plugins/compare/v0.1.5...v1.1.7) (2026-05-21)
 
-
 ### Bug Fixes
 
-* add new plugin to versioning ([80b88c9](https://github.com/district09/backstage-plugins/commit/80b88c9177c97e426e0fd0a1de21cdb7f850f842))
+- add new plugin to versioning ([80b88c9](https://github.com/district09/backstage-plugins/commit/80b88c9177c97e426e0fd0a1de21cdb7f850f842))
 
 ### [0.1.5](https://github.com/district09/backstage-plugins/compare/v0.1.4...v0.1.5) (2026-05-21)
 

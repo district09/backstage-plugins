@@ -191,6 +191,7 @@ export async function createRouter({
 
     const response: SingleComponentMigrationResult[] = results.map(r => ({
       checkId: r.checkId,
+      description: r.description,
       migrationReference: r.migrationReference,
       result: r.result,
       message: r.message,
