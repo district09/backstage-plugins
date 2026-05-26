@@ -27,6 +27,8 @@ describe('createRouter', () => {
     retrieveResultsFor: jest.fn(),
     retrieveResultsForComponent: jest.fn(),
     storeEntityCheckResults: jest.fn(),
+    storeCheckResult: jest.fn(),
+    getResultHistory: jest.fn(),
   };
 
   const mockCatalog = {

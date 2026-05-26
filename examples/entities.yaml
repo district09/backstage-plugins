@@ -62,7 +62,6 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: example-mobile-app
-  title: Example Mobile App
   description: A cross-platform mobile application built with React Native.
   tags:
     - mobile

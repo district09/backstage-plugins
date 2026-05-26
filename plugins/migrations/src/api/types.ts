@@ -32,4 +32,13 @@ export interface MigrationsApi {
   ): Promise<SingleComponentMigrationResult[]>;
 
   refreshMigration(migration: MigrationEntityV1): Promise<{ success: boolean }>;
+
+  getMigrationResultHistory(migrationRef: CompoundEntityRef): Promise<
+    Array<{
+      started_at?: string;
+      passed_count: number;
+      partially_passed_count: number;
+      total_count: number;
+    }>
+  >;
 }

@@ -80,4 +80,26 @@ export class MigrationClient implements MigrationsApi {
     }/${migration.kind}/${migration.metadata.name}`;
     return await this.fetch<{ success: boolean }>(url, { method: 'POST' });
   }
+
+  async getMigrationResultHistory(migrationRef: CompoundEntityRef): Promise<
+    Array<{
+      started_at?: string;
+      passed_count: number;
+      partially_passed_count: number;
+      total_count: number;
+    }>
+  > {
+    const baseUrl = await this.discoveryApi.getBaseUrl('migrations');
+    const url = `${baseUrl}/results/history/${
+      migrationRef.namespace || 'default'
+    }/${migrationRef.kind}/${migrationRef.name}`;
+    return await this.fetch<
+      Array<{
+        started_at?: string;
+        passed_count: number;
+        partially_passed_count: number;
+        total_count: number;
+      }>
+    >(url, { method: 'GET' });
+  }
 }

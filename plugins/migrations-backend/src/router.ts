@@ -209,5 +209,27 @@ export async function createRouter({
     }
   });
 
+  router.get('/results/history/:namespace/:kind/:name', async (req, res) => {
+    logger.info(
+      `Fetching check result history for migration ${req.params.kind} ${req.params.name}`,
+    );
+
+    const results = await dbService.getResultHistory({
+      namespace: req.params.namespace,
+      kind: req.params.kind,
+      name: req.params.name,
+    });
+
+    if (results.length === 0) {
+      res
+        .status(404)
+        .send(
+          `No results found for ${req.params.namespace}:${req.params.kind}:${req.params.name}`,
+        );
+    } else {
+      res.json(results);
+    }
+  });
+
   return router;
 }

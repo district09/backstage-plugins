@@ -78,6 +78,18 @@ export const migrationProgressContent = EntityCardBlueprint.make({
   },
 });
 
+export const migrationHistoryGraph = EntityCardBlueprint.make({
+  name: 'migration-history-graph',
+  params: {
+    filter: isMigrationEntityV1,
+    type: 'content',
+    loader: async () =>
+      import('./components/cards/MigrationHistoryGraph').then(m => (
+        <m.MigrationHistoryGraph />
+      )),
+  },
+});
+
 export const migrationsPlugin = createFrontendPlugin({
   pluginId: 'migrations',
   title: 'Migrations',
@@ -91,6 +103,7 @@ export const migrationsPlugin = createFrontendPlugin({
     migrationRefreshLink,
     entityMigrationContent,
     migrationProgressContent,
+    migrationHistoryGraph,
     migrationEntityResultsTable,
   ],
   routes: {

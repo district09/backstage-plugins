@@ -10,7 +10,10 @@ import {
   CompoundEntityRef,
   stringifyEntityRef,
 } from '@backstage/catalog-model';
-import { CheckResultsDbEntity } from '@district09/backstage-plugin-migrations-node';
+import {
+  CheckResultsDbEntity,
+  MigrationRunResultDbEntity,
+} from '@district09/backstage-plugin-migrations-node';
 
 export const migrationDatabaseServiceRef = createServiceRef<MigrationDatabase>({
   id: 'migrations.migrationDatabase',
@@ -91,6 +94,24 @@ export async function createMigrationDatabase({
           );
         }
       });
+    },
+    async storeCheckResult(result) {
+      const cutoff = new Date();
+      cutoff.setDate(cutoff.getDate() - 30);
+      await client.transaction(async tx => {
+        await tx
+          .table('migration_check_runs')
+          .where('migrationReference', result.migrationReference)
+          .where('started_at', '<', cutoff)
+          .del();
+        await tx.table('migration_check_runs').insert(result);
+      });
+    },
+    async getResultHistory(migration) {
+      return (await client
+        .table('migration_check_runs')
+        .where('migrationReference', stringifyEntityRef(migration))
+        .orderBy('started_at', 'asc')) as Array<MigrationRunResultDbEntity>;
     },
   };
 }

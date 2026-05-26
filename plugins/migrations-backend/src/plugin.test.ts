@@ -36,6 +36,8 @@ const migrationDatabaseMockFactory = createServiceFactory({
       storeEntityCheckResults: jest.fn().mockResolvedValue(undefined),
       retrieveResultsFor: jest.fn().mockResolvedValue([]),
       retrieveResultsForComponent: jest.fn().mockResolvedValue([]),
+      storeCheckResult: jest.fn().mockResolvedValue(undefined),
+      getResultHistory: jest.fn().mockResolvedValue([]),
     };
   },
 });
