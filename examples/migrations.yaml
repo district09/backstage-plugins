@@ -30,3 +30,9 @@ spec:
         path: spec.lifecycle
         op: equals
         value: production
+    - checkId: 'catalog-info'
+      config:
+        id: techdocs-ref
+        path: "metadata.annotations['backstage.io/techdocs-ref']"
+        op: equals
+        value: 'dir:.'
