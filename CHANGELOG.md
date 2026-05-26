@@ -4,10 +4,9 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.1.8](https://github.com/district09/backstage-plugins/compare/v1.1.7...v1.1.8) (2026-05-21)
 
-
 ### Bug Fixes
 
-* entity panel errors ([7c95a97](https://github.com/district09/backstage-plugins/commit/7c95a97f83106b9a3b827756f98100482db96c41))
+- entity panel errors ([7c95a97](https://github.com/district09/backstage-plugins/commit/7c95a97f83106b9a3b827756f98100482db96c41))
 
 ### [1.1.7](https://github.com/district09/backstage-plugins/compare/v0.1.5...v1.1.7) (2026-05-21)
 
