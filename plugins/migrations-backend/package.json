@@ -1,6 +1,6 @@
 {
   "name": "@district09/backstage-plugin-migrations-backend",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "license": "MIT",
   "repository": "https://github.com/district09/backstage-plugins",
   "main": "src/index.ts",

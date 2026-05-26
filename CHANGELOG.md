@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.9](https://github.com/district09/backstage-plugins/compare/v1.1.8...v1.1.9) (2026-05-26)
+
+
+### Bug Fixes
+
+* prettier ([f1caaa0](https://github.com/district09/backstage-plugins/commit/f1caaa0e5c6e2e53d2a7774db70d2f184c828de6))
+* rewrite access function ([a8eae5e](https://github.com/district09/backstage-plugins/commit/a8eae5e041e53b832088c1ba3cca4f4845219cfc))
+
 ### [1.1.8](https://github.com/district09/backstage-plugins/compare/v1.1.7...v1.1.8) (2026-05-21)
 
 ### Bug Fixes
