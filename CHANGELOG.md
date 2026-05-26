@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/district09/backstage-plugins/compare/v1.1.9...v1.2.0) (2026-05-26)
+
+
+### Features
+
+* add migration history charts ([811397f](https://github.com/district09/backstage-plugins/commit/811397f8351cf2d2e85f1310f2fffb4ade3b93c2))
+
 ### [1.1.9](https://github.com/district09/backstage-plugins/compare/v1.1.8...v1.1.9) (2026-05-26)
 
 ### Bug Fixes
