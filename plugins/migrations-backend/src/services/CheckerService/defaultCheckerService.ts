@@ -201,31 +201,6 @@ export class DefaultCheckerService implements CheckerService {
         componentReference: entityRef,
         results: rows,
       });
-
-      const byComponent = new Map<string, CheckResultsDbEntity[]>();
-      for (const row of rows) {
-        const existing = byComponent.get(row.componentReference) ?? [];
-        existing.push(row);
-        byComponent.set(row.componentReference, existing);
-      }
-
-      let passed_count = 0;
-      let partially_passed_count = 0;
-      for (const componentResults of byComponent.values()) {
-        const passCount = componentResults.filter(r => r.result).length;
-        if (passCount === componentResults.length) {
-          passed_count++;
-        } else if (passCount > 0) {
-          partially_passed_count++;
-        }
-      }
-
-      await this.database.storeCheckResult({
-        migrationReference: stringifyEntityRef(migration),
-        passed_count,
-        partially_passed_count,
-        total_count: byComponent.size,
-      });
     }
   }
 

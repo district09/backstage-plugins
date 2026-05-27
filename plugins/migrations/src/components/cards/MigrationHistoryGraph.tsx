@@ -42,17 +42,19 @@ export const MigrationHistoryGraph = () => {
     const history = await api.getMigrationResultHistory(
       getCompoundEntityRef(entity),
     );
-    return history.map(run => {
-      const total = run.total_count || 1;
-      return {
-        date: run.started_at ?? '',
-        passed: run.passed_count / total,
-        partial: run.partially_passed_count / total,
-        failed:
-          (run.total_count - run.passed_count - run.partially_passed_count) /
-          total,
-      };
-    });
+    return history
+      .filter(run => !!run.started_at)
+      .map(run => {
+        const total = run.total_count || 1;
+        const partiallyPassed = run.partially_passed_count ?? 0;
+        return {
+          date: run.started_at!,
+          failed:
+            (run.total_count - run.passed_count - partiallyPassed) / total,
+          partial: partiallyPassed / total,
+          passed: run.passed_count / total,
+        };
+      });
   }, [entity, api]);
 
   return (
@@ -90,12 +92,12 @@ export const MigrationHistoryGraph = () => {
             <Legend />
             <Area
               type="monotone"
-              dataKey="passed"
+              dataKey="failed"
               stackId="a"
-              stroke="#4caf50"
-              fill="#4caf50"
+              stroke="#f44336"
+              fill="#f44336"
               fillOpacity={0.7}
-              name="Passed"
+              name="Failed"
             />
             <Area
               type="monotone"
@@ -108,12 +110,12 @@ export const MigrationHistoryGraph = () => {
             />
             <Area
               type="monotone"
-              dataKey="failed"
+              dataKey="passed"
               stackId="a"
-              stroke="#f44336"
-              fill="#f44336"
+              stroke="#4caf50"
+              fill="#4caf50"
               fillOpacity={0.7}
-              name="Failed"
+              name="Passed"
             />
           </AreaChart>
         </ResponsiveContainer>
