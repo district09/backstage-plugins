@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/district09/backstage-plugins/compare/v1.2.0...v1.2.1) (2026-05-27)
+
+
+### Bug Fixes
+
+* remove check result from single entity runs ([319acac](https://github.com/district09/backstage-plugins/commit/319acacb7e61529c55ed52b80927838d46a360a4))
+
 ## [1.2.0](https://github.com/district09/backstage-plugins/compare/v1.1.9...v1.2.0) (2026-05-26)
 
 ### Features
