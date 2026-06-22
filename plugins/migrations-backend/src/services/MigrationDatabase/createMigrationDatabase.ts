@@ -163,7 +163,7 @@ export async function createMigrationDatabase({
             client.raw(
               'SUM(CASE WHEN comp.partial THEN 1 ELSE 0 END) as partially_passed_count',
             ),
-            client.raw('COUNT(comp.componentReference) as total_count'),
+            client.raw('COUNT(comp."componentReference") as total_count'),
           );
         return rows.map((r: any) => ({
           id: r.id,
