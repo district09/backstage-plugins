@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.2](https://github.com/district09/backstage-plugins/compare/v1.3.1...v1.3.2) (2026-06-22)
+
+
+### Bug Fixes
+
+* column casing for postgres ([d16f0f6](https://github.com/district09/backstage-plugins/commit/d16f0f621268ba4a1367c4dc00fcc363c1e0fd00))
+
 ### [1.3.1](https://github.com/district09/backstage-plugins/compare/v1.3.0...v1.3.1) (2026-06-22)
 
 ### Bug Fixes
