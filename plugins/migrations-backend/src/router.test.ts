@@ -309,6 +309,120 @@ describe('createRouter', () => {
     });
   });
 
+  describe('GET /results/history/:namespace/:kind/:name', () => {
+    const migRef = 'migration:default/my-migration';
+
+    it('returns historical runs with no filter', async () => {
+      mockDb.getResultHistory.mockResolvedValue([
+        {
+          migrationReference: migRef,
+          started_at: '2024-01-01T00:00:00.000Z',
+          passed_count: 8,
+          partially_passed_count: 1,
+          total_count: 10,
+        },
+        {
+          migrationReference: migRef,
+          started_at: '2024-02-01T00:00:00.000Z',
+          passed_count: 9,
+          partially_passed_count: 0,
+          total_count: 10,
+        },
+      ]);
+
+      const res = await request(app).get(
+        '/results/history/default/Migration/my-migration',
+      );
+
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveLength(2);
+      expect(mockDb.getResultHistory).toHaveBeenCalledWith(
+        { namespace: 'default', kind: 'Migration', name: 'my-migration' },
+        { componentRefs: undefined },
+      );
+    });
+
+    it('returns historical runs for filter=all', async () => {
+      mockDb.getResultHistory.mockResolvedValue([
+        {
+          migrationReference: migRef,
+          started_at: '2024-01-01T00:00:00.000Z',
+          passed_count: 8,
+          partially_passed_count: 1,
+          total_count: 10,
+        },
+      ]);
+
+      const res = await request(app)
+        .get('/results/history/default/Migration/my-migration')
+        .query({ filter: 'all' });
+
+      expect(res.status).toBe(200);
+      // filter=all from a service principal → no ownership lookup
+      expect(mockDb.getResultHistory).toHaveBeenCalledWith(
+        { namespace: 'default', kind: 'Migration', name: 'my-migration' },
+        { componentRefs: undefined },
+      );
+    });
+
+    it('returns 404 when no history exists', async () => {
+      mockDb.getResultHistory.mockResolvedValue([]);
+
+      const res = await request(app).get(
+        '/results/history/default/Migration/my-migration',
+      );
+
+      expect(res.status).toBe(404);
+    });
+
+    it('passes owned component refs to getResultHistory for filter=owned', async () => {
+      mockHttpAuth.credentials.mockResolvedValue(mockCredentials.user());
+      (mockAuth.isPrincipal as unknown as jest.Mock).mockReturnValue(true);
+      mockUserInfo.getUserInfo.mockResolvedValue({
+        userEntityRef: 'user:default/mock',
+        ownershipEntityRefs: ['group:default/my-team'],
+      });
+
+      (mockCatalog.getEntities as jest.Mock).mockResolvedValue({
+        items: [
+          {
+            apiVersion: 'backstage.io/v1alpha1',
+            kind: 'Component',
+            metadata: { name: 'owned-comp', namespace: 'default' },
+          },
+        ],
+      });
+
+      mockDb.getResultHistory.mockResolvedValue([
+        {
+          migrationReference: migRef,
+          started_at: '2024-01-01T00:00:00.000Z',
+          passed_count: 1,
+          partially_passed_count: 0,
+          total_count: 1,
+        },
+        {
+          migrationReference: migRef,
+          started_at: '2024-02-01T00:00:00.000Z',
+          passed_count: 1,
+          partially_passed_count: 0,
+          total_count: 1,
+        },
+      ]);
+
+      const res = await request(app)
+        .get('/results/history/default/Migration/my-migration')
+        .query({ filter: 'owned' });
+
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveLength(2);
+      expect(mockDb.getResultHistory).toHaveBeenCalledWith(
+        { namespace: 'default', kind: 'Migration', name: 'my-migration' },
+        { componentRefs: ['component:default/owned-comp'] },
+      );
+    });
+  });
+
   describe('GET /results/component/:namespace/:kind/:name', () => {
     it('returns 404 when no results are found for the component', async () => {
       mockDb.retrieveResultsForComponent.mockResolvedValue([]);

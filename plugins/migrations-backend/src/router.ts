@@ -214,10 +214,29 @@ export async function createRouter({
       `Fetching check result history for migration ${req.params.kind} ${req.params.name}`,
     );
 
-    const results = await dbService.getResultHistory({
+    const migrationReference = {
       namespace: req.params.namespace,
       kind: req.params.kind,
       name: req.params.name,
+    };
+
+    const credentials = await httpAuth.credentials(req);
+
+    let componentRefs: string[] | undefined;
+    if (auth.isPrincipal(credentials, 'user') && req.query.filter === 'owned') {
+      const info = await userInfo.getUserInfo(credentials);
+      const { items } = await catalog.getEntities(
+        {
+          filter: [{ 'relations.ownedBy': info.ownershipEntityRefs }],
+          fields: ['metadata.name', 'kind', 'metadata.namespace'],
+        },
+        { credentials },
+      );
+      componentRefs = items.map(e => stringifyEntityRef(e));
+    }
+
+    const results = await dbService.getResultHistory(migrationReference, {
+      componentRefs,
     });
 
     if (results.length === 0) {

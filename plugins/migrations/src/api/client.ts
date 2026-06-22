@@ -81,7 +81,10 @@ export class MigrationClient implements MigrationsApi {
     return await this.fetch<{ success: boolean }>(url, { method: 'POST' });
   }
 
-  async getMigrationResultHistory(migrationRef: CompoundEntityRef): Promise<
+  async getMigrationResultHistory(
+    migrationRef: CompoundEntityRef,
+    params?: { filter?: string },
+  ): Promise<
     Array<{
       started_at?: string;
       passed_count: number;
@@ -90,9 +93,10 @@ export class MigrationClient implements MigrationsApi {
     }>
   > {
     const baseUrl = await this.discoveryApi.getBaseUrl('migrations');
+    const query = params?.filter ? `?filter=${params.filter}` : '';
     const url = `${baseUrl}/results/history/${
       migrationRef.namespace || 'default'
-    }/${migrationRef.kind}/${migrationRef.name}`;
+    }/${migrationRef.kind}/${migrationRef.name}${query}`;
     return await this.fetch<
       Array<{
         started_at?: string;

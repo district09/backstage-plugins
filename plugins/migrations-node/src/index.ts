@@ -32,6 +32,15 @@ export type MigrationRunResultDbEntity = {
   total_count: number;
 };
 
+export type ComponentRunResultDbEntity = {
+  id?: number;
+  run_id: number;
+  migrationReference: string;
+  componentReference: string;
+  passed: boolean;
+  partial: boolean;
+};
+
 export interface MigrationCheckResult {
   result: boolean;
   /** Optional human-readable explanation of why the check passed or failed. */

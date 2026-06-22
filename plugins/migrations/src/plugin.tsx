@@ -54,41 +54,29 @@ export const entityMigrationContent = EntityContentBlueprint.make({
   },
 });
 
-export const migrationEntityResultsTable = EntityCardBlueprint.make({
-  name: 'migration-entity-results-table',
+export const migrationEntityDashboard = EntityCardBlueprint.make({
+  name: 'migration-entity-dashboard',
   params: {
     filter: isMigrationEntityV1,
     type: 'content',
     loader: async () =>
-      import('./components/MigrationEntityResultsTable').then(m => (
-        <m.MigrationEntityResultsTable />
+      import('./components/MigrationEntityDashboard').then(m => (
+        <m.MigrationEntityDashboard />
       )),
   },
 });
 
-export const migrationProgressContent = EntityCardBlueprint.make({
-  name: 'migration-progress-content',
-  params: {
-    filter: isMigrationEntityV1,
-    type: 'content',
-    loader: async () =>
-      import('./components/cards/MigrationProgressContent.tsx').then(m => (
-        <m.MigrationProgressContent />
-      )),
-  },
-});
-
-export const migrationHistoryGraph = EntityCardBlueprint.make({
-  name: 'migration-history-graph',
-  params: {
-    filter: isMigrationEntityV1,
-    type: 'content',
-    loader: async () =>
-      import('./components/cards/MigrationHistoryGraph').then(m => (
-        <m.MigrationHistoryGraph />
-      )),
-  },
-});
+// export const migrationHistoryGraph = EntityCardBlueprint.make({
+//   name: 'migration-history-graph',
+//   params: {
+//     filter: isMigrationEntityV1,
+//     type: 'content',
+//     loader: async () =>
+//       import('./components/cards/MigrationHistoryGraph').then(m => (
+//         <m.MigrationHistoryGraph />
+//       )),
+//   },
+// });
 
 export const migrationsPlugin = createFrontendPlugin({
   pluginId: 'migrations',
@@ -102,9 +90,7 @@ export const migrationsPlugin = createFrontendPlugin({
     migrationsApi,
     migrationRefreshLink,
     entityMigrationContent,
-    migrationProgressContent,
-    migrationHistoryGraph,
-    migrationEntityResultsTable,
+    migrationEntityDashboard,
   ],
   routes: {
     root: rootRouteRef,

@@ -1,6 +1,7 @@
 import { CompoundEntityRef } from '@backstage/catalog-model';
 import {
   CheckResultsDbEntity,
+  ComponentRunResultDbEntity,
   MigrationRunResultDbEntity,
 } from '@district09/backstage-plugin-migrations-node';
 
@@ -26,8 +27,18 @@ export interface MigrationDatabase {
     entity: CompoundEntityRef,
   ): Promise<Array<CheckResultsDbEntity>>;
 
-  storeCheckResult(result: MigrationRunResultDbEntity): Promise<void>;
+  storeCheckResult(input: {
+    run: MigrationRunResultDbEntity;
+    components: Array<
+      Pick<
+        ComponentRunResultDbEntity,
+        'componentReference' | 'passed' | 'partial'
+      >
+    >;
+  }): Promise<void>;
+
   getResultHistory(
     migration: CompoundEntityRef,
+    params?: { componentRefs?: string[] },
   ): Promise<Array<MigrationRunResultDbEntity>>;
 }

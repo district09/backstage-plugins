@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useApi } from '@backstage/frontend-plugin-api';
 import { useEntity } from '@backstage/plugin-catalog-react';
 import { MigrationEntityV1 } from '@district09/backstage-plugin-migrations-common';
@@ -15,6 +16,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import { useMigrationResultsContext } from '../MigrationResultsProvider';
 
 type ChartPoint = {
   date: string;
@@ -33,14 +35,17 @@ const dateFormatter = (value: string) => {
 export const MigrationHistoryGraph = () => {
   const api = useApi(migrationsApiRef);
   const { entity } = useEntity<MigrationEntityV1>();
+  const { filter } = useMigrationResultsContext();
+  const previousDataRef = useRef<ChartPoint[] | undefined>(undefined);
 
   const {
-    value: data,
+    value: freshData,
     loading,
     error,
   } = useAsync(async (): Promise<ChartPoint[]> => {
     const history = await api.getMigrationResultHistory(
       getCompoundEntityRef(entity),
+      { filter },
     );
     return history
       .filter(run => !!run.started_at)
@@ -55,21 +60,26 @@ export const MigrationHistoryGraph = () => {
           passed: run.passed_count / total,
         };
       });
-  }, [entity, api]);
+  }, [entity, api, filter]);
+
+  if (!loading && freshData) {
+    previousDataRef.current = freshData;
+  }
+  const data = freshData ?? previousDataRef.current;
 
   return (
     <InfoCard title="Migration progress history">
-      {loading && <Progress />}
+      {loading && !data && <Progress />}
       {error && (
         <WarningPanel title="Failed to load history" message={error.message} />
       )}
-      {!loading && !error && data && data.length === 0 && (
+      {!error && data && data.length === 0 && (
         <WarningPanel
           title="No history yet"
           message="Run checks to start tracking progress over time."
         />
       )}
-      {!loading && !error && data && data.length > 0 && (
+      {!error && data && data.length > 0 && (
         <ResponsiveContainer width="100%" height={280}>
           <AreaChart
             data={data}

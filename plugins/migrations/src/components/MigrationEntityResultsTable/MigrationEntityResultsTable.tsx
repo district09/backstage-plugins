@@ -1,11 +1,5 @@
-import { useState } from 'react';
-import { useApi } from '@backstage/frontend-plugin-api';
-import { migrationsApiRef } from '../../api';
-import { EntityRefLink, useEntity } from '@backstage/plugin-catalog-react';
-import {
-  ComponentMigrationResult,
-  MigrationEntityV1,
-} from '@district09/backstage-plugin-migrations-common';
+import { EntityRefLink } from '@backstage/plugin-catalog-react';
+import { ComponentMigrationResult } from '@district09/backstage-plugin-migrations-common';
 import {
   StatusError,
   StatusOK,
@@ -21,9 +15,10 @@ import {
   Tooltip,
   TooltipTrigger,
 } from '@backstage/ui';
-import { useAsync } from 'react-use';
 import styles from './MigrationEntityResultsTable.module.css';
 import { CheckResultsPanel } from '../CheckResultsPanel';
+import { useMigrationResultsContext } from '../MigrationResultsProvider';
+import type { MigrationResultsFilter } from '../../hooks/useMigrationResults';
 
 type RowData = {
   id: string;
@@ -100,17 +95,11 @@ const createColumns = (
 
 /** Shown on the migration entity page — lists all components checked in this migration. */
 export const MigrationEntityResultsTable = () => {
-  const migrationsApi = useApi(migrationsApiRef);
-  const { entity } = useEntity<MigrationEntityV1>();
-  const [selected, setSelected] = useState<string>('owned');
-
-  const { loading, value } = useAsync(async () => {
-    return await migrationsApi.getMigrationResults(entity, {
-      offset: 0,
-      pageSize: 500,
-      filter: selected,
-    });
-  }, [entity, migrationsApi, selected]);
+  const {
+    filter,
+    setFilter,
+    results: { loading, value },
+  } = useMigrationResultsContext();
 
   const columns = createColumns(value?.checks ?? []);
 
@@ -119,10 +108,10 @@ export const MigrationEntityResultsTable = () => {
       <Box style={{ marginBottom: 'var(--bui-space-4)' }}>
         <ToggleButtonGroup
           selectionMode="single"
-          selectedKeys={new Set([selected])}
+          selectedKeys={new Set([filter])}
           onSelectionChange={keys => {
             const val = [...keys][0];
-            if (val) setSelected(val as string);
+            if (val) setFilter(val as MigrationResultsFilter);
           }}
         >
           <ToggleButton id="owned">Owned</ToggleButton>

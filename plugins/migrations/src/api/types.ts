@@ -33,7 +33,10 @@ export interface MigrationsApi {
 
   refreshMigration(migration: MigrationEntityV1): Promise<{ success: boolean }>;
 
-  getMigrationResultHistory(migrationRef: CompoundEntityRef): Promise<
+  getMigrationResultHistory(
+    migrationRef: CompoundEntityRef,
+    params?: { filter?: string },
+  ): Promise<
     Array<{
       started_at?: string;
       passed_count: number;

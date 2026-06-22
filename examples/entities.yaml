@@ -69,7 +69,7 @@ metadata:
 spec:
   type: website
   lifecycle: deprecated
-  owner: guests
+  owner: guests2
   system: examples
 ---
 # https://backstage.io/docs/features/software-catalog/descriptor-format#kind-api

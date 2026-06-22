@@ -108,20 +108,32 @@ export class DefaultCheckerService implements CheckerService {
 
     let passed_count = 0;
     let partially_passed_count = 0;
-    for (const componentResults of byComponent.values()) {
+    const componentRunRows: Array<{
+      componentReference: string;
+      passed: boolean;
+      partial: boolean;
+    }> = [];
+    for (const [componentRef, componentResults] of byComponent.entries()) {
       const passCount = componentResults.filter(r => r.result).length;
-      if (passCount === componentResults.length) {
-        passed_count++;
-      } else if (passCount > 0) {
-        partially_passed_count++;
-      }
+      const allPassed = passCount === componentResults.length;
+      const somePartial = passCount > 0 && passCount < componentResults.length;
+      if (allPassed) passed_count++;
+      else if (somePartial) partially_passed_count++;
+      componentRunRows.push({
+        componentReference: componentRef,
+        passed: allPassed,
+        partial: somePartial,
+      });
     }
 
     await this.database.storeCheckResult({
-      migrationReference: stringifyEntityRef(migration),
-      passed_count,
-      partially_passed_count,
-      total_count: byComponent.size,
+      run: {
+        migrationReference: stringifyEntityRef(migration),
+        passed_count,
+        partially_passed_count,
+        total_count: byComponent.size,
+      },
+      components: componentRunRows,
     });
   }
 

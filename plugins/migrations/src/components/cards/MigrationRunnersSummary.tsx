@@ -1,10 +1,7 @@
+import { useMemo } from 'react';
 import { Box, Card, Grid, Text } from '@backstage/ui';
-import { useEntity } from '@backstage/plugin-catalog-react';
-import { MigrationEntityV1 } from '@district09/backstage-plugin-migrations-common';
-import { useApi } from '@backstage/frontend-plugin-api';
-import { migrationsApiRef } from '../../api';
-import { useAsync } from 'react-use';
 import { LinearGauge } from '@backstage/core-components';
+import { useMigrationResultsContext } from '../MigrationResultsProvider';
 import styles from './MigrationRunnersSummary.module.css';
 
 interface RunnerResult {
@@ -15,21 +12,18 @@ interface RunnerResult {
 }
 
 export const MigrationRunnersSummary = () => {
-  const migrationsApi = useApi(migrationsApiRef);
-  const { entity } = useEntity<MigrationEntityV1>();
+  const {
+    results: { value, loading, error },
+  } = useMigrationResultsContext();
 
-  const { value, loading, error } = useAsync(async () => {
-    const r = await migrationsApi.getMigrationResults(entity, {
-      offset: 0,
-      pageSize: 0,
-    });
-
-    const checks: RunnerResult[] = r.checks.map(i => ({
+  const computed = useMemo((): RunnerResult[] | undefined => {
+    if (!value) return undefined;
+    const checks: RunnerResult[] = value.checks.map(i => ({
       ...i,
       passed_count: 0,
       total_count: 0,
     }));
-    r.components
+    value.components
       .flatMap(i => i.results)
       .forEach(i => {
         const check = checks.find(c => c.id === i.checkId);
@@ -38,12 +32,12 @@ export const MigrationRunnersSummary = () => {
           check.total_count += 1;
         }
       });
-
-    return { results: checks };
-  }, [entity, migrationsApi]);
+    return checks;
+  }, [value]);
 
   // TODO: improve loading and error states
-  if (loading || !value || error) return null;
+  if (error || (!computed && loading)) return null;
+  if (!computed) return null;
 
   return (
     <Card className={styles.card}>
@@ -55,7 +49,7 @@ export const MigrationRunnersSummary = () => {
         >
           Runners
         </Text>
-        {value.results.map((result, index) => (
+        {computed.map((result, index) => (
           <Grid.Root columns={{ sm: '12' }} gap="4" key={index}>
             <Grid.Item colSpan={{ sm: '6' }}>{result.id}</Grid.Item>
             <Grid.Item colSpan={{ sm: '6' }}>
