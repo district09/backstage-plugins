@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/district09/backstage-plugins/compare/v1.2.1...v1.3.0) (2026-06-22)
+
+
+### Features
+
+* add hook to only fetch results once migration page ([b656536](https://github.com/district09/backstage-plugins/commit/b65653610bfa7e2d50bb5560f002c1820e768b37))
+
 ### [1.2.1](https://github.com/district09/backstage-plugins/compare/v1.2.0...v1.2.1) (2026-05-27)
 
 ### Bug Fixes
