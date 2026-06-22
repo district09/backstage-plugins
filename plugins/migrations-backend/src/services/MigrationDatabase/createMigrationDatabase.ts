@@ -114,9 +114,10 @@ export async function createMigrationDatabase({
           .where('migrationReference', input.run.migrationReference)
           .where('started_at', '<', cutoff)
           .del();
-        const [runId] = await tx
+        const [{ id: runId }] = await tx
           .table('migration_check_runs')
-          .insert(input.run);
+          .insert(input.run)
+          .returning('id');
         if (input.components.length > 0) {
           const componentRows: ComponentRunResultDbEntity[] =
             input.components.map(c => ({
